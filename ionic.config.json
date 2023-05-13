@@ -1,0 +1,7 @@
+{
+  "name": "khaleej-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
