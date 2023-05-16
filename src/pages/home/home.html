@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+        <ion-buttons end>
+            <button *ngIf="auth.language=='en'" ion-button (click)="changeLang('ar')">
+        العربية
+      </button>
+            <button *ngIf="auth.language=='ar'" ion-button (click)="changeLang('en')">
+        English
+      </button>
+            <button *ngIf="auth.userId!=-1" ion-button (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
+    <div *ngIf="loggedin==false">
+        <h3 text-center>{{ 'home.register_with_khaleej' | translate }}</h3>
+        <p>{{ 'home.register_with_khaleej_notes' | translate }}</p>
+        <button ion-button block color="secondary" (click)="register()">{{ 'home.register_now' | translate }}</button>
+        <button ion-button block color="primary" (click)="login()">{{ 'home.sign_in' | translate }}</button>
+    </div>
+    <hr>
+    <h4>{{ 'home.explore_khaleej' | translate }}</h4>
+    <ion-row>
+        <ion-col no-padding col-6 *ngFor="let item of items" (click)="(active)?hybridpage():current(item)">
+            <ion-card>
+                <img [src]="item.imagelink" />
+                <span *ngIf="item.count!='0'" class="count">{{ item.count }}</span>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

@@ -1,0 +1,9 @@
+<!-- Generated template for the MakeComponent component -->
+<div>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let make of makes" (click)="selectMake(make)">
+      {{ make.cat_name }}
+    </ion-item>
+  </ion-list>
+</div>

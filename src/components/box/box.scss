@@ -1,0 +1,89 @@
+box {
+  ion-grid
+  {
+    background-color: #fff;
+    margin:1px;
+  }
+    ion-row {
+        color:#005495;
+      }
+      ion-img{
+        width:100%;
+        height: 100%;
+      }
+      .mask
+      {
+        position: absolute;
+    width: 96%;
+    height: 100%;
+    background-color: #90989587;
+    z-index: 100;
+    color: black;
+    text-align: center;
+    vertical-align: middle;
+    padding: 85px 54px;
+    font-size: larger;
+    font-weight: 900;
+      }
+      .image-container
+      {
+        min-height: 130px;
+        max-height: 130px;
+      }
+      .title
+      {
+        max-height: 44px;
+      }
+      .second
+      {
+        color: color($colors,danger);
+      }
+      .remaining
+      {
+        font-size:smaller; 
+        padding-left: 0;
+      }
+      .bids
+      {
+        font-size:smaller; 
+      }
+      .grid
+      {
+        position: relative;
+      }
+      .auto-bid
+      {
+        position: absolute;
+        top: 11px;
+        background-color: green;
+        color: white;
+        border-radius: 16px;
+        padding: 4px 6px;
+        font-size: 12px;
+        @include rtl() {
+          left: 13px;
+        }
+        @include ltr() {
+          right: 13px;
+        }
+      }
+      .title b {
+        white-space: nowrap;
+      }
+      .current-badge
+      {
+        @include float(end);
+      }
+      .num-badge
+      {
+        @include text-align(end)
+      }
+      .remaining-badge
+      {
+        @include rtl() {
+          direction: ltr;
+          display: inline-block;
+          float: left;
+        }
+      }
+}

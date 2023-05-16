@@ -1,0 +1,1060 @@
+page-hybrid {
+    @import url(https://fonts.googleapis.com/css?family=Lato:700);
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+    
+    ion-input
+    {
+      color:black;
+    }
+    .set-size {
+      font-size: 6em;
+      position: absolute;
+      top: 5px;
+      right: 8px;
+    }
+    
+    .charts-container:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+    
+    .pie-wrapper {
+      height: 1em;
+      width: 1em;
+      margin:auto;
+      position: relative;
+      z-index:99;
+    }
+    .pie-wrapper:nth-child(3n + 1) {
+      clear: both;
+    }
+    .pie-wrapper .pie {
+      height: 100%;
+      width: 100%;
+      clip: rect(0, 1em, 1em, 0.5em);
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+    .pie-wrapper .pie .half-circle {
+      height: 100%;
+      width: 100%;
+      border: 0.1em solid #3498db;
+      border-radius: 50%;
+      clip: rect(0, 0.5em, 1em, 0);
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+    .pie-wrapper .label {
+      background: #34495e;
+      border-radius: 50%;
+      bottom: 1em;
+      color: #ecf0f1;
+      cursor: default;
+      display: block;
+      font-size: 0.25em;
+      left: 1em;
+      line-height: 2em;
+      position: absolute;
+      right: 1em;
+      text-align: center;
+      top: 1em;
+    }
+    .pie-wrapper .label .smaller {
+      color: #bdc3c7;
+      font-size: 0.45em;
+      padding-bottom: 20px;
+      vertical-align: super;
+    }
+    .pie-wrapper .shadow {
+      height: 100%;
+      width: 100%;
+      border: 0.1em solid #bdc3c7;
+      border-radius: 50%;
+    }
+    .pie-wrapper.style-2 .label {
+      background: none;
+      color: #7f8c8d;
+    }
+    .pie-wrapper.style-2 .label .smaller {
+      color: #bdc3c7;
+    }
+    .pie-wrapper.progress-30 .pie .half-circle {
+      border-color: #3498db;
+    }
+    .pie-wrapper.progress-30 .pie .left-side {
+      -webkit-transform: rotate(108deg);
+              transform: rotate(108deg);
+    }
+    .pie-wrapper.progress-30 .pie .right-side {
+      display: none;
+    }
+    .pie-wrapper.progress-60 .pie {
+      clip: rect(auto, auto, auto, auto);
+    }
+    .pie-wrapper.progress-60 .pie .half-circle {
+      border-color: #9b59b6;
+    }
+    .pie-wrapper.progress-60 .pie .left-side {
+      -webkit-transform: rotate(216deg);
+              transform: rotate(216deg);
+    }
+    .pie-wrapper.progress-60 .pie .right-side {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
+    .pie-wrapper.progress-90 .pie {
+      clip: rect(auto, auto, auto, auto);
+    }
+    .pie-wrapper.progress-90 .pie .half-circle {
+      border-color: #e67e22;
+    }
+    .pie-wrapper.progress-90 .pie .left-side {
+      -webkit-transform: rotate(324deg);
+              transform: rotate(324deg);
+    }
+    .pie-wrapper.progress-90 .pie .right-side {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
+    .pie-wrapper.progress-45 .pie .half-circle {
+      border-color: #1abc9c;
+    }
+    .pie-wrapper.progress-45 .pie .left-side {
+      -webkit-transform: rotate(162deg);
+              transform: rotate(162deg);
+    }
+    .pie-wrapper.progress-45 .pie .right-side {
+      display: none;
+    }
+    .pie-wrapper.progress-75 .pie {
+      clip: rect(auto, auto, auto, auto);
+    }
+    .pie-wrapper.progress-75 .pie .half-circle {
+      border-color: #8e44ad;
+    }
+    .pie-wrapper.progress-75 .pie .left-side {
+      -webkit-transform: rotate(270deg);
+              transform: rotate(270deg);
+    }
+    .pie-wrapper.progress-75 .pie .right-side {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
+    .pie-wrapper.progress-95 .pie {
+      clip: rect(auto, auto, auto, auto);
+    }
+    .pie-wrapper.progress-95 .pie .half-circle {
+      border-color: #e74c3c;
+    }
+    .pie-wrapper.progress-95 .pie .left-side {
+      -webkit-transform: rotate(342deg);
+              transform: rotate(342deg);
+    }
+    .pie-wrapper.progress-95 .pie .right-side {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
+    
+    .pie-wrapper--solid {
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .pie-wrapper--solid:before {
+      border-radius: 0 100% 100% 0 / 50%;
+      content: "";
+      display: block;
+      height: 100%;
+      margin-left: 50%;
+      -webkit-transform-origin: left;
+              transform-origin: left;
+    }
+    
+    .pie-wrapper--solid.progress-1 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-1:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(176deg);
+              transform: rotate(176deg);
+    }.pie-wrapper--solid.progress-2 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-2:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(173deg);
+              transform: rotate(173deg);
+    }.pie-wrapper--solid.progress-3 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-3:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(169deg);
+              transform: rotate(169deg);
+    }.pie-wrapper--solid.progress-4 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-4:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(166deg);
+              transform: rotate(166deg);
+    }.pie-wrapper--solid.progress-5 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-5:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(162deg);
+              transform: rotate(162deg);
+    }.pie-wrapper--solid.progress-6 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-6:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(158deg);
+              transform: rotate(158deg);
+    }.pie-wrapper--solid.progress-7 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-7:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(155deg);
+              transform: rotate(155deg);
+    }.pie-wrapper--solid.progress-8 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-8:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(151deg);
+              transform: rotate(151deg);
+    }.pie-wrapper--solid.progress-9 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-9:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(148deg);
+              transform: rotate(148deg);
+    }.pie-wrapper--solid.progress-10 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-10:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(144deg);
+              transform: rotate(144deg);
+    }.pie-wrapper--solid.progress-11 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-11:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(140deg);
+              transform: rotate(140deg);
+    }.pie-wrapper--solid.progress-12 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-12:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(137deg);
+              transform: rotate(137deg);
+    }.pie-wrapper--solid.progress-13 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-13:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(133deg);
+              transform: rotate(133deg);
+    }.pie-wrapper--solid.progress-14 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-14:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(130deg);
+              transform: rotate(130deg);
+    }.pie-wrapper--solid.progress-15 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-15:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(126deg);
+              transform: rotate(126deg);
+    }.pie-wrapper--solid.progress-16 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-16:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(122deg);
+              transform: rotate(122deg);
+    }.pie-wrapper--solid.progress-17 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-17:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(119deg);
+              transform: rotate(119deg);
+    }.pie-wrapper--solid.progress-18 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-18:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(115deg);
+              transform: rotate(115deg);
+    }.pie-wrapper--solid.progress-19 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-19:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(112deg);
+              transform: rotate(112deg);
+    }.pie-wrapper--solid.progress-20 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-20:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(108deg);
+              transform: rotate(108deg);
+    }.pie-wrapper--solid.progress-21 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-21:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(104deg);
+              transform: rotate(104deg);
+    }.pie-wrapper--solid.progress-22 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-22:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(101deg);
+              transform: rotate(101deg);
+    }.pie-wrapper--solid.progress-23 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-23:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(97deg);
+              transform: rotate(97deg);
+    }.pie-wrapper--solid.progress-24 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-24:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(94deg);
+              transform: rotate(94deg);
+    }.pie-wrapper--solid.progress-25 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-25:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(90deg);
+              transform: rotate(90deg);
+    }.pie-wrapper--solid.progress-26 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-26:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(86deg);
+              transform: rotate(86deg);
+    }.pie-wrapper--solid.progress-27 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-27:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(83deg);
+              transform: rotate(83deg);
+    }.pie-wrapper--solid.progress-28 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-28:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(79deg);
+              transform: rotate(79deg);
+    }.pie-wrapper--solid.progress-29 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-29:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(76deg);
+              transform: rotate(76deg);
+    }.pie-wrapper--solid.progress-30 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-30:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(72deg);
+              transform: rotate(72deg);
+    }.pie-wrapper--solid.progress-31 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-31:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(68deg);
+              transform: rotate(68deg);
+    }.pie-wrapper--solid.progress-32 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-32:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(65deg);
+              transform: rotate(65deg);
+    }.pie-wrapper--solid.progress-33 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-33:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(61deg);
+              transform: rotate(61deg);
+    }.pie-wrapper--solid.progress-34 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-34:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(58deg);
+              transform: rotate(58deg);
+    }.pie-wrapper--solid.progress-35 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-35:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(54deg);
+              transform: rotate(54deg);
+    }.pie-wrapper--solid.progress-36 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-36:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(50deg);
+              transform: rotate(50deg);
+    }.pie-wrapper--solid.progress-37 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-37:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(47deg);
+              transform: rotate(47deg);
+    }.pie-wrapper--solid.progress-38 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-38:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(43deg);
+              transform: rotate(43deg);
+    }.pie-wrapper--solid.progress-39 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-39:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(40deg);
+              transform: rotate(40deg);
+    }.pie-wrapper--solid.progress-40 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-40:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(36deg);
+              transform: rotate(36deg);
+    }.pie-wrapper--solid.progress-41 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-41:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(32deg);
+              transform: rotate(32deg);
+    }.pie-wrapper--solid.progress-42 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-42:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(29deg);
+              transform: rotate(29deg);
+    }.pie-wrapper--solid.progress-43 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-43:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(25deg);
+              transform: rotate(25deg);
+    }.pie-wrapper--solid.progress-44 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-44:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(22deg);
+              transform: rotate(22deg);
+    }.pie-wrapper--solid.progress-45 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-45:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(18deg);
+              transform: rotate(18deg);
+    }.pie-wrapper--solid.progress-46 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-46:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(14deg);
+              transform: rotate(14deg);
+    }.pie-wrapper--solid.progress-47 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-47:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(11deg);
+              transform: rotate(11deg);
+    }.pie-wrapper--solid.progress-48 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-48:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(7deg);
+              transform: rotate(7deg);
+    }.pie-wrapper--solid.progress-49 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-49:before {
+      background: #da1d0f;
+      -webkit-transform: rotate(4deg);
+              transform: rotate(4deg);
+    }.pie-wrapper--solid.progress-50 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-50:before {
+      background: #16b70b;
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }.pie-wrapper--solid.progress-51 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-51:before {
+      background: #16b70b;
+      -webkit-transform: rotate(176deg);
+              transform: rotate(176deg);
+    }.pie-wrapper--solid.progress-52 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-52:before {
+      background: #16b70b;
+      -webkit-transform: rotate(173deg);
+              transform: rotate(173deg);
+    }.pie-wrapper--solid.progress-53 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-53:before {
+      background: #16b70b;
+      -webkit-transform: rotate(169deg);
+              transform: rotate(169deg);
+    }.pie-wrapper--solid.progress-54 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-54:before {
+      background: #16b70b;
+      -webkit-transform: rotate(166deg);
+              transform: rotate(166deg);
+    }.pie-wrapper--solid.progress-55 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-55:before {
+      background: #16b70b;
+      -webkit-transform: rotate(162deg);
+              transform: rotate(162deg);
+    }.pie-wrapper--solid.progress-56 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-56:before {
+      background: #16b70b;
+      -webkit-transform: rotate(158deg);
+              transform: rotate(158deg);
+    }.pie-wrapper--solid.progress-57 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-57:before {
+      background: #16b70b;
+      -webkit-transform: rotate(155deg);
+              transform: rotate(155deg);
+    }.pie-wrapper--solid.progress-58 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-58:before {
+      background: #16b70b;
+      -webkit-transform: rotate(151deg);
+              transform: rotate(151deg);
+    }.pie-wrapper--solid.progress-59 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-59:before {
+      background: #16b70b;
+      -webkit-transform: rotate(148deg);
+              transform: rotate(148deg);
+    }.pie-wrapper--solid.progress-60 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-60:before {
+      background: #16b70b;
+      -webkit-transform: rotate(144deg);
+              transform: rotate(144deg);
+    }.pie-wrapper--solid.progress-61 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-61:before {
+      background: #16b70b;
+      -webkit-transform: rotate(140deg);
+              transform: rotate(140deg);
+    }.pie-wrapper--solid.progress-62 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-62:before {
+      background: #16b70b;
+      -webkit-transform: rotate(137deg);
+              transform: rotate(137deg);
+    }.pie-wrapper--solid.progress-63 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-63:before {
+      background: #16b70b;
+      -webkit-transform: rotate(133deg);
+              transform: rotate(133deg);
+    }.pie-wrapper--solid.progress-64 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-64:before {
+      background: #16b70b;
+      -webkit-transform: rotate(130deg);
+              transform: rotate(130deg);
+    }.pie-wrapper--solid.progress-65 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-65:before {
+      background: #16b70b;
+      -webkit-transform: rotate(126deg);
+              transform: rotate(126deg);
+    }.pie-wrapper--solid.progress-66 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-66:before {
+      background: #16b70b;
+      -webkit-transform: rotate(122deg);
+              transform: rotate(122deg);
+    }.pie-wrapper--solid.progress-67 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-67:before {
+      background: #16b70b;
+      -webkit-transform: rotate(119deg);
+              transform: rotate(119deg);
+    }.pie-wrapper--solid.progress-68 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-68:before {
+      background: #16b70b;
+      -webkit-transform: rotate(115deg);
+              transform: rotate(115deg);
+    }.pie-wrapper--solid.progress-69 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-69:before {
+      background: #16b70b;
+      -webkit-transform: rotate(112deg);
+              transform: rotate(112deg);
+    }.pie-wrapper--solid.progress-70 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-70:before {
+      background: #16b70b;
+      -webkit-transform: rotate(108deg);
+              transform: rotate(108deg);
+    }.pie-wrapper--solid.progress-71 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-71:before {
+      background: #16b70b;
+      -webkit-transform: rotate(104deg);
+              transform: rotate(104deg);
+    }.pie-wrapper--solid.progress-72 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-72:before {
+      background: #16b70b;
+      -webkit-transform: rotate(101deg);
+              transform: rotate(101deg);
+    }.pie-wrapper--solid.progress-73 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-73:before {
+      background: #16b70b;
+      -webkit-transform: rotate(97deg);
+              transform: rotate(97deg);
+    }.pie-wrapper--solid.progress-74 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-74:before {
+      background: #16b70b;
+      -webkit-transform: rotate(94deg);
+              transform: rotate(94deg);
+    }.pie-wrapper--solid.progress-75 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-75:before {
+      background: #16b70b;
+      -webkit-transform: rotate(90deg);
+              transform: rotate(90deg);
+    }.pie-wrapper--solid.progress-76 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-76:before {
+      background: #16b70b;
+      -webkit-transform: rotate(86deg);
+              transform: rotate(86deg);
+    }.pie-wrapper--solid.progress-77 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-77:before {
+      background: #16b70b;
+      -webkit-transform: rotate(83deg);
+              transform: rotate(83deg);
+    }.pie-wrapper--solid.progress-78 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-78:before {
+      background: #16b70b;
+      -webkit-transform: rotate(79deg);
+              transform: rotate(79deg);
+    }.pie-wrapper--solid.progress-79 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-79:before {
+      background: #16b70b;
+      -webkit-transform: rotate(76deg);
+              transform: rotate(76deg);
+    }.pie-wrapper--solid.progress-80 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-80:before {
+      background: #16b70b;
+      -webkit-transform: rotate(72deg);
+              transform: rotate(72deg);
+    }.pie-wrapper--solid.progress-81 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-81:before {
+      background: #16b70b;
+      -webkit-transform: rotate(68deg);
+              transform: rotate(68deg);
+    }.pie-wrapper--solid.progress-82 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-82:before {
+      background: #16b70b;
+      -webkit-transform: rotate(65deg);
+              transform: rotate(65deg);
+    }.pie-wrapper--solid.progress-83 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-83:before {
+      background: #16b70b;
+      -webkit-transform: rotate(61deg);
+              transform: rotate(61deg);
+    }.pie-wrapper--solid.progress-84 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-84:before {
+      background: #16b70b;
+      -webkit-transform: rotate(58deg);
+              transform: rotate(58deg);
+    }.pie-wrapper--solid.progress-85 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-85:before {
+      background: #16b70b;
+      -webkit-transform: rotate(54deg);
+              transform: rotate(54deg);
+    }.pie-wrapper--solid.progress-86 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-86:before {
+      background: #16b70b;
+      -webkit-transform: rotate(50deg);
+              transform: rotate(50deg);
+    }.pie-wrapper--solid.progress-87 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-87:before {
+      background: #16b70b;
+      -webkit-transform: rotate(47deg);
+              transform: rotate(47deg);
+    }.pie-wrapper--solid.progress-88 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-88:before {
+      background: #16b70b;
+      -webkit-transform: rotate(43deg);
+              transform: rotate(43deg);
+    }.pie-wrapper--solid.progress-89 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-89:before {
+      background: #16b70b;
+      -webkit-transform: rotate(40deg);
+              transform: rotate(40deg);
+    }.pie-wrapper--solid.progress-90 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-90:before {
+      background: #16b70b;
+      -webkit-transform: rotate(36deg);
+              transform: rotate(36deg);
+    }.pie-wrapper--solid.progress-91 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-91:before {
+      background: #16b70b;
+      -webkit-transform: rotate(32deg);
+              transform: rotate(32deg);
+    }.pie-wrapper--solid.progress-92 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-92:before {
+      background: #16b70b;
+      -webkit-transform: rotate(29deg);
+              transform: rotate(29deg);
+    }.pie-wrapper--solid.progress-93 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-93:before {
+      background: #16b70b;
+      -webkit-transform: rotate(25deg);
+              transform: rotate(25deg);
+    }.pie-wrapper--solid.progress-94 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-94:before {
+      background: #16b70b;
+      -webkit-transform: rotate(22deg);
+              transform: rotate(22deg);
+    }.pie-wrapper--solid.progress-95 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-95:before {
+      background: #16b70b;
+      -webkit-transform: rotate(18deg);
+              transform: rotate(18deg);
+    }.pie-wrapper--solid.progress-96 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-96:before {
+      background: #16b70b;
+      -webkit-transform: rotate(14deg);
+              transform: rotate(14deg);
+    }.pie-wrapper--solid.progress-97 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-97:before {
+      background: #16b70b;
+      -webkit-transform: rotate(11deg);
+              transform: rotate(11deg);
+    }.pie-wrapper--solid.progress-98 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-98:before {
+      background: #16b70b;
+      -webkit-transform: rotate(7deg);
+              transform: rotate(7deg);
+    }.pie-wrapper--solid.progress-99 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-99:before {
+      background: #16b70b;
+      -webkit-transform: rotate(4deg);
+              transform: rotate(4deg);
+    }.pie-wrapper--solid.progress-100 {
+      background: -webkit-gradient(linear, left top, right top, color-stop(50%, #16b70b), color-stop(50%, #da1d0f));
+      background: linear-gradient(to right, #16b70b 50%, #da1d0f 50%);
+    }
+    .pie-wrapper--solid.progress-100:before {
+      background: #16b70b;
+      -webkit-transform: rotate(0deg);
+              transform: rotate(0deg);
+    }
+
+    ion-note
+    {
+      display: block;
+      padding-left: 10px;
+      color:red!important;
+    }
+      ion-row {
+          color:#005495;
+        }
+        img{
+          width:100%;
+        }
+        [border-bottom-all] {
+          border-right: 1px solid #005495;
+          border-left: 1px solid #005495;
+          border-bottom: 1px solid #005495;
+          border-radius: 0px 0px 10px 10px;
+        }
+        [border-top] {
+          border-right: 1px solid #005495;
+          border-left: 1px solid #005495;
+          border-top: 1px solid #005495;
+          border-radius: 10px 10px 0px 0px;
+        }
+        [border-top-left] {
+          border-right: 1px solid #005495;
+          border-left: 1px solid #005495;
+          border-top: 1px solid #005495;
+          border-radius: 10px 0px 0px 0px;
+        }
+        [border-top-right] {
+          border-right: 1px solid #005495;
+          border-top: 1px solid #005495;
+          border-radius: 0px 10px 0px 0px;
+        }
+        [border-middle] {
+          border-left: 1px solid #005495;
+          border-top: 1px solid #005495;
+        }
+        [border-right] {
+          border-right: 1px solid #005495;
+        }
+        [border-bottom] {
+          border-bottom: 1px solid #005495;
+        }
+    .swiper-button-next,.swiper-button-prev
+    {
+        top: 115px;
+        padding: 25px;
+        background-color: #00000061;
+    }
+    .swiper-button-next {
+        right: 0 !important;
+    }
+    .swiper-button-prev{
+        left: 0 !important;
+    }
+    .footer-items
+    {
+        color:#fff;
+        margin-bottom: auto;
+        margin-top: auto;
+    }
+    .text-input-md {
+        margin: 2px 1px;
+    }
+    .title
+    {
+        background-color: #b5b3b3;
+        color: black;
+        font-size: 1.8rem;
+    }
+    .card-header-md {
+        background-color: #f1d2aa;
+    }
+    .card-md {
+         margin: 0px; 
+        width: 100%;
+    }
+}

@@ -1,0 +1,64 @@
+<!--
+  Generated template for the CurrentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ title }}</ion-title>
+    <ion-buttons end>
+      <button *ngIf="auth.language=='en'" ion-button (click)="changeLang('ar')">
+        العربية
+      </button>
+      <button *ngIf="auth.language=='ar'" ion-button (click)="changeLang('en')">
+        English
+      </button>
+      <button (click)="gotoHome()" ion-button icon-only>
+        <ion-icon  name="home"></ion-icon>
+      </button>
+      <button ion-button (click)="presentPopover($event)"><ion-icon name="search"></ion-icon></button>
+      <button *ngIf="auth.userId!=-1" ion-button (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar vanish-scroll [vanish-scroll]="scrollArea" (parentFun)="contentResize()">
+      <!-- <button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" ion-button [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></button> -->
+      <ion-col>
+      <button color="primary"  *ngIf="enddates.length>0" ion-button (click)="presentEndPopover($event)">
+        {{end()[0].enddate}}
+        <ion-badge  color="danger" style="margin-left:5px;" item-end>{{end()[0].totitems}}</ion-badge>
+      </button>
+    </ion-col>
+    <button ion-button color="dark" (click)="changeInsta()" clear>Instagram</button>
+      <button color="dark" ion-button icon-only outline float-right  (click)="changeView()">
+        <ion-icon [name]="(view=='grid')?'list':'grid'"></ion-icon>
+      </button>
+  </ion-toolbar>
+</ion-header>
+<ion-content #scrollArea scrollEvents="true" (ionScroll)="logScrolling($event)">
+  <ion-list *ngIf="view=='grid'">
+    <box *ngFor="let auction of auctions" [step]="auction"></box>
+  </ion-list>
+  <ion-list *ngIf="view=='list'">
+    <rectangle *ngFor="let auction of auctions" [step]="auction"></rectangle>
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-toolbar vanish-scroll-footer [vanish-scroll-footer]="scrollArea" (footerFun)="contentResize()">
+    <!-- <button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" ion-button [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></button> -->
+    <ion-row>
+      <ion-col (click)="goto('mybids')" text-center>
+        <ion-icon name="hammer"></ion-icon>
+        {{ 'dash.mybids' | translate }}
+      </ion-col>
+      <ion-col (click)="goto('favorite')" text-center>
+        <ion-icon name="heart"></ion-icon>
+        {{ 'dash.favorite' | translate }}
+      </ion-col>
+      <ion-col (click)="gotoHybrid()" text-center>
+        <ion-icon name="timer"></ion-icon>
+        {{ 'dash.hybrid' | translate }}
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,9 @@
+<!-- Generated template for the MakeComponent component -->
+<div>
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let model of models" (click)="selectModel(model)">
+      {{ model.cat_name }}
+    </ion-item>
+  </ion-list>
+</div>

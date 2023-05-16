@@ -1,0 +1,122 @@
+<!-- Generated template for the ExpandableComponent component -->
+<div #expandWrapper class='expand-wrapper' [class.collapsed]="!item.expanded">
+    <div [ngSwitch]="item.tab">
+        <div *ngSwitchCase="'summary'">
+            <ion-list>
+                <button ion-item *ngFor="let s of summary">
+          {{ s }}
+        </button>
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'mybids'">
+            <box *ngFor="let auction of auctions" [step]="auction"></box>
+        </div>
+        <div *ngSwitchCase="'favorite'">
+            <box *ngFor="let auction of auctions" [step]="auction"></box>
+        </div>
+        <div *ngSwitchCase="'purchases'">
+            <ion-grid class="forecast_container">
+                <ion-row nowrap class="header">
+                    <ion-col col-3>{{ 'dash.auctionid' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.auctiontitle' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.chassisno' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.ends' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.yourbid' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.quantity' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.totaldue' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.status' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.uploadpayment' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="purchases.length==0" nowrap>
+                    <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngFor="let pr of purchases" nowrap>
+                    <ion-col col-3>{{pr.id}}</ion-col>
+                    <ion-col col-3>{{pr.title}}</ion-col>
+                    <ion-col col-3>{{pr.chassisno}}</ion-col>
+                    <ion-col col-3>{{pr.ends}}</ion-col>
+                    <ion-col col-3>{{pr.BID}}</ion-col>
+                    <ion-col col-3>{{pr.QTY}}</ion-col>
+                    <ion-col col-3>{{pr.TOTAL}}</ion-col>
+                    <ion-col col-3>{{pr.id}}</ion-col>
+                    <ion-col col-3>{{pr.id}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <div *ngSwitchCase="'unsold'">
+            <ion-grid class="forecast_container">
+                <ion-row nowrap class="header">
+                    <ion-col col-3>{{ 'dash.id' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.title' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.started' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.ends' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.selleroffer' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.buyeroffer' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.sellerstatus' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="unsold.length==0" nowrap>
+                    <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngFor="let un of unsold" nowrap>
+                    <ion-col col-3>{{un.id}}</ion-col>
+                    <ion-col col-3>{{un.title}}</ion-col>
+                    <ion-col col-3>{{un.starts}}</ion-col>
+                    <ion-col col-3>{{un.ends}}</ion-col>
+                    <ion-col col-3>{{un.selleroffer}}</ion-col>
+                    <ion-col col-3>{{un.buyeroffer}}</ion-col>
+                    <ion-col col-3>{{un.sellerstatus}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <div *ngSwitchCase="'invoice'">
+            <ion-grid class="forecast_container">
+                <ion-row nowrap class="header">
+                    <ion-col col-3>{{ 'dash.name' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.title' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.amount' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.balance' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.status' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.duedate' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="invoice.length==0" nowrap>
+                    <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngFor="let in of invoice" nowrap>
+                    <ion-col col-3>{{in.USERNAME}}</ion-col>
+                    <ion-col col-3>{{in.NAME}}</ion-col>
+                    <ion-col col-3>{{in.AMOUNT}}</ion-col>
+                    <ion-col col-3>{{in.BALANCEAMOUNT}}</ion-col>
+                    <ion-col col-3>{{in.STATUS}}</ion-col>
+                    <ion-col col-3>{{in.DUEDATE}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <div *ngSwitchCase="'payment'">
+            <ion-grid class="forecast_container">
+                <ion-row nowrap class="header">
+                    <ion-col col-3>{{ 'dash.name' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.title' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.amount' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.reference' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.dateadded' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.bankname' | translate }}</ion-col>
+                    <ion-col col-3>{{ 'dash.bankaccount' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="payment.length==0" nowrap>
+                    <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
+                </ion-row>
+                <ion-row *ngFor="let pm of payment" nowrap>
+                    <ion-col col-3>{{pm.USERNAME}}</ion-col>
+                    <ion-col col-3>{{pm.NAME}}</ion-col>
+                    <ion-col col-3>{{pm.AMOUNT}}</ion-col>
+                    <ion-col col-3>{{pm.REFERENCE}}</ion-col>
+                    <ion-col col-3>{{pm.DATEADDED}}</ion-col>
+                    <ion-col col-3>{{pm.BANKNAME}}</ion-col>
+                    <ion-col col-3>{{pm.BANKACCOUNT}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+
+    </div>
+
+</div>

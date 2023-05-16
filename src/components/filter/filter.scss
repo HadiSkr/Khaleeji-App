@@ -1,0 +1,21 @@
+filter {
+    .select-icon {
+        position: relative;
+        width: 21px;
+        height: 19px;
+        float: right;
+    }
+    .select-icon-inner {
+        left: 5px;
+        top: 50%;
+        margin-top: -3px;
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 5px solid;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        color: #999;
+        pointer-events: none;
+    }
+}

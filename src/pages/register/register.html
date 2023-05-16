@@ -1,0 +1,92 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-title>Register</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-grid radio-group [(ngModel)]="todo.type" (ionChange)="onChangeType()">
+        <ion-row>
+            <ion-col>
+                <ion-label style="display: inline-block;margin:0;">{{ 'register.individual' | translate }}</ion-label>
+                <ion-radio value="individual"></ion-radio>
+                <ion-label style="display: inline-block;margin:0;margin-left:20px">{{ 'register.organisation' | translate }}</ion-label>
+                <ion-radio value="organisation"></ion-radio>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <form #registerForm="ngForm" (ngSubmit)="logForm(registerForm)">
+        <ion-item *ngIf="type=='o'">
+            <ion-label>{{ 'register.trade_license_number' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.license" name="license"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="type=='o'">
+            <ion-label>{{ 'register.trade_licence_exp_date' | translate }}</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="todo.licenseexp" name="licenseexp"></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="type=='o'">
+            <ion-label>{{ 'register.tax_registration_number' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.licensereg" name="licensereg"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.fullname' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.fullname" name="name"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.username' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.username" name="username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.password' | translate }}</ion-label>
+            <ion-input type="password" [(ngModel)]="todo.password" name="password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.email' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.email" name="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.dob' | translate }}</ion-label>
+            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="todo.dob" name="dob"></ion-datetime>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.address' | translate }}</ion-label>
+            <ion-textarea [(ngModel)]="todo.address" name="address"></ion-textarea>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.city' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.city" name="city"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.state' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.state" name="state"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.zip' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="todo.zip" name="zip"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.country' | translate }}</ion-label>
+            <ion-select [(ngModel)]="todo.country" name="country">
+                <ion-option *ngFor="let c of countries" [value]="c.value">{{ c.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.telephone' | translate }}</ion-label>
+            <ion-input type="number" [(ngModel)]="todo.phone" name="telephone"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'register.timezone' | translate }}</ion-label>
+            <ion-select [(ngModel)]="todo.timezone" name="timezone">
+                <ion-option *ngFor="let c of timezones" [value]="c.value">{{ c.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+        <button ion-button type="submit" block>{{ 'register.register' | translate }}</button>
+    </form>
+
+</ion-content>

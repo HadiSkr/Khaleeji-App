@@ -1,0 +1,98 @@
+<div padding>
+  <ion-segment [(ngModel)]="filterType">
+    <ion-segment-button value="search">
+      {{ 'filter.search' | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="make">
+      {{ 'filter.make' | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="type">
+      {{ 'filter.type' | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="year">
+      {{ 'filter.year' | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="advanced">
+      {{ 'filter.advanced' | translate }}
+    </ion-segment-button>
+  </ion-segment>
+</div>
+<div style="max-height: 300px;overflow-y: scroll;" [ngSwitch]="filterType">
+  <ion-list *ngSwitchCase="'search'">
+    <ion-item>
+      <ion-label color="primary">{{ 'filter.lot' | translate }}</ion-label>
+      <ion-input [(ngModel)]="searchtab.lot_no" placeholder="Lot.no."></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'filter.make' | translate }}</ion-label>
+      <!-- <ion-select [(ngModel)]="searchtab.make" (ionChange)="getModels()">
+        <ion-option *ngFor="let make of makes" [value]="make.cat_id">{{make.cat_name}}</ion-option>
+      </ion-select> -->
+      <ion-note item-content (click)="presentPopover($event)">
+        {{ searchtab.makename }}
+        <div class="select-icon"><div class="select-icon-inner"></div></div>
+      </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{ 'filter.model' | translate }}</ion-label>
+      <ion-note item-content (click)="presentModelPopover($event)">
+        {{ searchtab.modelname }}
+        <div class="select-icon"><div class="select-icon-inner"></div></div>
+      </ion-note>
+    </ion-item>
+    <ion-item>
+      <ion-label col-3>{{ 'filter.year' | translate }} </ion-label>
+      
+      <ion-select col-4 [(ngModel)]="searchtab.year_from" placeholder="{{ 'filter.from' | translate }}">
+        <ion-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-option>
+      </ion-select>
+      
+      <ion-select col-4 [(ngModel)]="searchtab.year_to" placeholder="{{ 'filter.to' | translate }}">
+        <ion-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-option>
+      </ion-select>
+    </ion-item>
+    
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'make'">
+    <ion-item *ngFor="let item of categories">
+      <ion-label>{{item.maincat}}({{item.carscount}})</ion-label>
+      <ion-checkbox [(ngModel)]="maketab[item.categoryid]" color="dark" ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngSwitchCase="'type'">
+    <ion-item *ngFor="let item of types">
+      <ion-label>{{item.valuetype}}({{item.totalCount}})</ion-label>
+      <ion-checkbox [(ngModel)]="typetab[item.auto]" color="dark" ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngSwitchCase="'year'">
+    <ion-item *ngFor="let year of years">
+      <ion-label>{{year.year}}({{year.carscount}})</ion-label>
+      <ion-checkbox [(ngModel)]="yeartab[year.year]" color="dark" ></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-item-group  *ngSwitchCase="'advanced'">
+    <div  *ngFor="let item of advanced">
+      <ion-item-divider color="light">{{item.title}}</ion-item-divider>
+      <ion-item *ngFor="let check of item.value">
+        <ion-label>{{check.value}}</ion-label>
+        <ion-checkbox [(ngModel)]="advancedtab[check.auto]" color="dark" ></ion-checkbox>
+      </ion-item>
+    </div>
+    
+    
+  </ion-item-group>
+</div>
+<ion-row>
+  <ion-col>
+    <button (click)="clearFilter()" ion-button block icon-end color="info">
+      {{ 'filter.clear' | translate }}
+    </button>
+  </ion-col>
+  <ion-col >
+    <button (click)="searchAuction()" ion-button block icon-end color="danger">
+      {{ 'filter.search' | translate }}
+    </button>
+  </ion-col>
+</ion-row>

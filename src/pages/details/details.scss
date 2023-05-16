@@ -1,0 +1,57 @@
+page-details {
+    .swiper-button-next,
+    .swiper-button-prev {
+        top: 115px;
+        padding: 25px;
+        background-color: #00000061;
+    }
+    .swiper-button-next {
+        right: 0!important;
+    }
+    .swiper-button-prev {
+        left: 0!important;
+    }
+    .footer-items {
+        color: #000;
+        margin-bottom: auto;
+        margin-top: auto;
+    }
+    .text-input-md {
+        margin: 2px 1px;
+    }
+    .title {
+        background-color: #b5b3b3;
+        color: black;
+        font-size: 1.8rem;
+    }
+    .card-header-md {
+        background-color: #f1d2aa;
+    }
+    .card-md {
+        margin: 0px;
+        width: 100%;
+    }
+    .auto-bid {
+        position: absolute;
+        top: -25px;
+        right: 0;
+        height: 25px;
+        padding: 4px 11px;
+        border-radius: 4px 0px 0px 0px;
+    }
+    .auto-bid.green {
+        background-color: #32db64;
+        color: black;
+    }
+    .auto-bid.red {
+        background-color: #f53d3d;
+        color: white;
+    }
+    .auto-bid.green b {
+        margin-right: 3px;
+    }
+    ion-footer .toolbar {
+        contain: unset;
+        overflow: visible;
+    }
+}

@@ -1,0 +1,62 @@
+<!-- Generated template for the BoxComponent component -->
+<ion-grid col-6 float-left >
+    <ion-row class="mask" *ngIf="auction.instagram&&flag">
+        {{ 'box.tap_to_share' | translate }}
+    </ion-row>
+    <ion-row *ngIf="!auction.hideImage" (click)="gotoDetails(auction.id)">
+        <ion-col class="image-container">
+            <img [src]="(auction.image)?auction.image:auction.preimage" />
+        </ion-col>
+    </ion-row>
+    <ion-row (click)="gotoDetails(auction.id)">
+        <ion-col class="title">
+            <b>{{auction.title}}</b>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            {{ 'box.lot' | translate }} <span class="second">{{auction.id}}</span>
+        </ion-col>
+        <ion-col class="num-badge">
+            {{ 'box.bids' | translate }} {{auction.num_bids}}
+        </ion-col>
+    </ion-row>
+    <ion-row>
+
+        <ion-col>
+            <ion-icon name="time"></ion-icon>
+            <span class="remaining-badge">{{ auction.ends | convertremaining }}</span>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            {{ 'box.price' | translate }}
+            <ion-badge class="current-badge" [color]="(auction.highestbidder)? 'secondary' : 'danger'">{{auction.current_bid | currentprice }} </ion-badge>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col col-2>
+                <button (click)="favorite(auction)" type="button" class="btn btn-outline-primary"><ion-icon [name]="(auction.favourite)?'heart':'heart-outline'"></ion-icon></button>
+
+        </ion-col>
+        <ion-col col-2>
+                <button (click)="showAutoBidPrompt(auction)" type="button" class="btn btn-outline-primary"><ion-icon name="flash"></ion-icon></button>
+        </ion-col>
+        <ion-col col-8>
+            <button (click)="bid(auction.id)" class="item-bid-button" ion-button size="small"  color="danger">500</button>
+        </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+    <ion-col text-center border-bottom-all>
+      Bid<br/>
+      <button ion-button full (click)="bid(auction.id)" [color]="(auction.highestbidder)? 'secondary' : 'danger'">{{auction.current_bid | bidprice }}</button>
+      OR
+      <ion-item>
+        <ion-label fixed>Enter your bid</ion-label>
+        <ion-input type="text" [(ngModel)]="price"></ion-input>
+      </ion-item>
+      <button ion-button full (click)="custombid(auction.id)" color="danger">Bid Now</button>
+    </ion-col>
+  </ion-row> -->
+    <span *ngIf="auction.autobidder" class="auto-bid">A</span>
+</ion-grid>

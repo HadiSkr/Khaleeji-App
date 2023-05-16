@@ -1,0 +1,38 @@
+<!-- Generated template for the BoxComponent component -->
+<ion-grid>
+  <ion-row *ngIf="!auction.hideImage">
+    <ion-col (click)="gotoDetails(auction.id)" col-4 class="image-container">
+      <img [src]="(auction.image)?auction.image:auction.preimage"/>
+    </ion-col>
+    <ion-col col-8>
+      <ion-row>
+        <ion-col col-8>
+          <div (click)="gotoDetails(auction.id)"><b class="item-title">{{auction.title}}</b></div>
+          <div class="item-bid">{{ 'box.bids' | translate }}  {{auction.num_bids}}</div>
+          <div class="item-timer" style="width: 116px;"><ion-icon name="time"></ion-icon><span> {{ auction.ends | convertremaining }}</span></div>
+          <!--<div>
+            <button style="padding:5px;height:2rem;" ion-button size="small" (click)="bid(auction.id)" [color]="(auction.highestbidder)? 'secondary' : 'danger'">{{auction.current_bid | bidprice }}</button>
+          </div>-->
+          <div class="item-bid-price" [style.color]="(auction.highestbidder)? 'green' : 'red'">{{auction.current_bid | currentprice }}</div>
+        </ion-col>
+        <ion-col col-4>
+          <!--<div class="item-current-bid" [style.color]="(auction.highestbidder)? 'green' : 'red'">{{auction.current_bid | currentprice }}</div>-->
+          <br>
+          <div class="item-lot">{{ 'box.lot' | translate }} <span class="second">{{auction.id}}</span></div>
+          <div class="float-right item-fav-icons">
+            <button (click)="favorite(auction)" type="button" class="btn btn-outline-primary"><ion-icon [name]="(auction.favourite)?'heart':'heart-outline'"></ion-icon></button>
+            <button (click)="showAutoBidPrompt(auction)" type="button" class="btn btn-outline-primary"><ion-icon name="flash"></ion-icon></button>
+          </div>
+          <div>
+            <!--<input style="width:40px;" type="text" [(ngModel)]="amount" [class.hidden]="!auction.hideBidAmountInput"/>-->
+            <!--
+            <button style="padding:5px;height:2rem;" ion-button size="small" (click)="custombid(auction.id)" color="danger">Bid</button>-->
+            <button (click)="bid(auction.id)" class="item-bid-button" ion-button size="small"  color="danger">500</button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <span *ngIf="auction.autobidder" class="auto-bid">A</span>
+</ion-grid>

@@ -1,0 +1,146 @@
+<!--
+  Generated template for the DetailsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <ion-buttons end>
+            <button *ngIf="auth.language=='en'" ion-button clear color="light" (click)="changeLang('ar')">
+        العربية
+      </button>
+            <button *ngIf="auth.language=='ar'" ion-button clear color="light" (click)="changeLang('en')">
+        English
+      </button>
+            <button (click)="gotoHome()" ion-button icon-only clear color="light">
+        <ion-icon name="home"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div style="direction: ltr;">
+        <div *ngIf="(auction.images)?((auction.images.length>1)?true:false):false" class="swiper-button-next" tappable (click)="nextSlide()"></div>
+        <div *ngIf="(auction.images)?((auction.images.length>1)?true:false):false" class="swiper-button-prev" tappable (click)="prevSlide()" style="right: unset;"></div>
+        <div style="height:200px">
+            <ion-slides *ngIf="auction.images" loop #slides>
+                <ion-slide *ngFor="let s of auction.images">
+                    <img [src]="(s.original_path)?s.original_path:s">
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+
+
+    <ion-list style="margin-bottom: 20px;" *ngIf="auction">
+        <ion-row>
+            <ion-col class="title">
+                {{auction.title}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col style="    background-color: #005495;
+    color: white;">
+                {{ 'details.currentprice' | translate }}<br />{{auction.current_bid | currentprice }}
+            </ion-col>
+            <ion-col style="background-color: #f53d3d;
+    color: white;">
+                {{ 'details.minimum' | translate }}<br />{{ auth.bidamount }}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                {{ 'details.ends' | translate }} : {{auction.endson}}
+            </ion-col>
+            <ion-col col-12>
+                {{ 'details.remaining' | translate }} : {{ auction.ends | convertremaining }}
+            </ion-col>
+            <ion-col col-12>
+                {{ 'details.bids' | translate }} : {{auction.num_bids}}
+            </ion-col>
+        </ion-row>
+    </ion-list>
+    <ion-row>
+        <ion-col><button (click)="favorite()" ion-button block icon-start outline>
+        <ion-icon [name]="(auction.favourite)?'heart':'heart-outline'"></ion-icon>Favorite
+      </button>
+        </ion-col>
+        <ion-col><button (click)="shareMe()" ion-button icon-start block color="secondary" outline>
+        <ion-icon name="share"></ion-icon> Share
+      </button></ion-col>
+    </ion-row>
+    <ion-card>
+
+        <ion-card-header>
+            {{ 'details.specs' | translate }}
+        </ion-card-header>
+
+        <ion-card-content>
+            <ion-grid>
+                <ion-row *ngFor="let spec of specification">
+                    <ion-col col-5>{{spec.key}}</ion-col>
+                    <ion-col col-7>{{spec.value}}</ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+
+    </ion-card>
+    <ion-card>
+
+        <ion-card-header>
+            {{ 'details.notes' | translate }}
+        </ion-card-header>
+
+        <ion-card-content>
+            {{auction.en_shipping_terms}}
+        </ion-card-content>
+
+    </ion-card>
+    <ion-card>
+
+        <ion-card-header>
+            {{ 'details.desc' | translate }}
+        </ion-card-header>
+
+        <ion-card-content>
+            {{description}}
+        </ion-card-content>
+
+    </ion-card>
+    <ion-card *ngIf="link">
+
+
+        <ion-card-content>
+            <iframe style="overflow: hidden; border-width: 0;" seamless width="100%" height="350" src="" id="map" frameborder="0" style="border:0" [src]="link"></iframe>
+        </ion-card-content>
+
+    </ion-card>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-row class="auto-bid green" *ngIf="auction.autobid_id!=undefined&&auction.autobid_id==auth.userId" (click)="showAutoBidCancelConfirm()"><b>{{ 'details.autobid' | translate }}</b>
+            <ion-badge item-end>{{ auction.autobid_amount | bidprice }}</ion-badge>
+        </ion-row>
+        <ion-row class="auto-bid red" *ngIf="auction.autobid_id!=undefined&&auction.autobid_id!=auth.userId" (click)="showAutoBidPrompt()">{{ 'details.autobid' | translate }}</ion-row>
+        <ion-row>
+            <ion-col col-5 class="footer-items" text-center>
+                <ion-badge *ngIf="auction.highestbidder" color="secondary" style="color: black;">{{ 'details.highest' | translate }}</ion-badge>
+                <button ion-button block color="danger" (click)="bid()">
+          {{ 'details.bid' | translate }}
+        </button>
+            </ion-col>
+            <ion-col col-1 text-center class="footer-items">
+                {{ 'details.or' | translate }}
+            </ion-col>
+            <ion-col col-6 class="footer-items">
+                <ion-input [(ngModel)]="price" placeholder="{{ 'details.enter' | translate }}" clearInput></ion-input>
+
+                <button ion-button block color="primary" (click)="custombid()">
+          {{ 'details.directbid' | translate }}
+        </button>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
+</ion-footer>

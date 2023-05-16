@@ -1,0 +1,8 @@
+<!-- Generated template for the DropdownComponent component -->
+<ion-list>
+  
+  <ion-item *ngFor="let date of enddates" (click)="filterByDate(date)">
+    {{date.enddate}}
+    <ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge>
+  </ion-item>
+</ion-list>

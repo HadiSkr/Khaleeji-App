@@ -1,0 +1,44 @@
+page-home {
+    ion-content{
+        background: #e6e4e4 !important;
+    }
+    ion-card img {
+        width:unset;
+        margin: auto;
+        height: 114px;
+    }
+    p{
+        font-family: system-ui;
+        line-height: 13px;
+        font-size: 12px;
+    }
+    h4{
+        font-family: system-ui;
+        font-size:1.5rem;
+    }
+    .card-md
+    {
+        background-color: #005495;
+        border-radius: 6px;
+    }
+    .count
+    {    position: absolute;
+        top: 0;
+        background-color: #f30c0c;
+        border-radius: 4px;
+        padding: 4px;
+        color: white;
+        border: #f4f4f4 1px solid;
+        min-width: 25px;
+        text-align:center;
+        @include ltr() {
+            // Custom ltr style goes here
+            right: 0;
+        }
+        @include rtl() {
+            // Custom ltr style goes here
+            left: 0;
+        }
+    }
+    
+}
