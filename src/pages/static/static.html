@@ -5,19 +5,19 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-buttons end>
-      <button *ngIf="auth.language=='en'" ion-button clear color="light" (click)="changeLang('ar')">
+      <button *ngIf="auth.language==='en'" ion-button clear color="light" (click)="changeLang('ar')">
         العربية
       </button>
-      <button *ngIf="auth.language=='ar'" ion-button clear color="light" (click)="changeLang('en')">
+      <button *ngIf="auth.language==='ar'" ion-button clear color="light" (click)="changeLang('en')">
         English
       </button>
       <button (click)="gotoHome()" ion-button icon-only clear color="light">
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>

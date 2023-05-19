@@ -3,7 +3,7 @@ import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { NavController } from '@ionic/angular';
 import { DetailsPage } from '../../pages/details/details';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Socket } from 'ng-socket-io';
 
 /**
@@ -259,8 +259,8 @@ export class ExpandableComponent  implements AfterViewInit {
   }
   gotoAuction(id)
   {
-    this.navCtrl.push(DetailsPage,{
-      id:id
+    this.navCtrl.navigateForward('/details',{
+      state:{id:id}
       });
   }
 

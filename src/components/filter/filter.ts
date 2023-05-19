@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { LoadingController, ViewController, PopoverController } from '@ionic/angular';
+import { LoadingController, ModalController, PopoverController } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { CacheProvider } from '../../providers/cache/cache';
 import { MakeComponent } from '../../components/make/make';
 import { ModelComponent } from '../../components/model/model';
-import { jsonpCallbackContext } from '@angular/common/http/src/module';
 
 /**
  * Generated class for the FilterComponent component.
@@ -31,7 +30,7 @@ export class FilterComponent {
   yearsdropdown: any=[];
   advanced: any=[];
 
-  constructor(public popoverCtrl: PopoverController, public viewCtrl: ViewController,public cache: CacheProvider, public loadingCtrl: LoadingController,public common : CommonProvider) {
+  constructor(public popoverCtrl: PopoverController, public modelCtrl: ModalController ,public cache: CacheProvider, public loadingCtrl: LoadingController,public common : CommonProvider) {
     console.log('Hello FilterComponent Component');
     this.filterType="search";
     this.getCategories();
@@ -75,23 +74,23 @@ export class FilterComponent {
     }
   }
 
-  presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(MakeComponent, {}, {cssClass: 'make-popover'});
-    popover.present({
-      ev: myEvent
-    });
-    popover.onDidDismiss(order => {
+  async presentPopover(myEvent) {
+    let popover = await this.popoverCtrl.create({
+      component: MakeComponent,
+      cssClass: 'make-popover'});
+    popover.present(myEvent);
+    popover.onDidDismiss().then(order => {
       if(order!=null)
       {
         delete this.searchtab.model;
         delete this.searchtab.modelname;
-        this.searchtab.make=order.cat_id;
-        this.searchtab.makename=order.cat_name;
+        this.searchtab.make=order.data.cat_id;
+        this.searchtab.makename=order.data.cat_name;
         this.getModels();
       }
     });
   }
-  getModels()
+  async getModels()
   {
     if(this.cache.getCache('models-'+this.searchtab.make)!=undefined)
     {
@@ -117,16 +116,17 @@ export class FilterComponent {
 
 
   }
-  presentModelPopover(myEvent) {
-    let popover = this.popoverCtrl.create(ModelComponent, {models:this.models}, {cssClass: 'make-popover'});
-    popover.present({
-      ev: myEvent
+  async presentModelPopover(myEvent) {
+    let popover = await this.popoverCtrl.create({
+      component: ModelComponent,
+      cssClass: 'make-popover'
     });
-    popover.onDidDismiss(order => {
+    popover.present(myEvent);
+    popover.onDidDismiss().then(order => {
       if(order!=null)
       {
-        this.searchtab.model=order.cat_id;
-        this.searchtab.modelname=order.cat_name;
+        this.searchtab.model=order.data.cat_id;
+        this.searchtab.modelname=order.data.cat_name;
       }
     });
   }
@@ -307,7 +307,7 @@ export class FilterComponent {
       default:
     }
     this.cache.setCache('filterType',this.filterType);
-    this.viewCtrl.dismiss(json);
+    this.modelCtrl.dismiss(json);
   }
   clearFilter()
   {

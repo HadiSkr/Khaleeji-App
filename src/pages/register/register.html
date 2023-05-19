@@ -22,15 +22,15 @@
         </ion-row>
     </ion-grid>
     <form #registerForm="ngForm" (ngSubmit)="logForm(registerForm)">
-        <ion-item *ngIf="type=='o'">
+        <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.trade_license_number' | translate }}</ion-label>
             <ion-input type="text" [(ngModel)]="todo.license" name="license"></ion-input>
         </ion-item>
-        <ion-item *ngIf="type=='o'">
+        <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.trade_licence_exp_date' | translate }}</ion-label>
             <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="todo.licenseexp" name="licenseexp"></ion-datetime>
         </ion-item>
-        <ion-item *ngIf="type=='o'">
+        <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.tax_registration_number' | translate }}</ion-label>
             <ion-input type="text" [(ngModel)]="todo.licensereg" name="licensereg"></ion-input>
         </ion-item>

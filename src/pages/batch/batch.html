@@ -5,9 +5,9 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title>Auctions</ion-title>
-  </ion-navbar>
+  </ion-toolbar>
   <ion-toolbar no-border-top>
     <ion-segment [(ngModel)]="pet">
       <ion-segment-button value="today">
@@ -29,7 +29,7 @@
           <p>{{ batch.description }}</p>
           <span style="font-size:x-small;" item-end><ion-note >{{ batch.count }} lots</ion-note><br/>Auction starts in<br/> <span style="color:red;">{{ batch.remaining }}</span></span>
       </ion-item>
-      <ion-item *ngIf="today.length == 0">
+      <ion-item *ngIf="today.length === 0">
         <h2>No auctions today</h2>
       </ion-item>
     </ion-list>
@@ -41,7 +41,7 @@
           <p>{{ batch.description }}</p>
           <span item-end><ion-note >{{ batch.count }} lots</ion-note><br/>Auction starts in<br/> {{ batch.remaining }}</span>
       </ion-item>
-      <ion-item *ngIf="upcoming.length == 0">
+      <ion-item *ngIf="upcoming.length === 0">
         <h2>No upcoming auctions.</h2>
       </ion-item>
     </ion-list>

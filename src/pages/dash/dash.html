@@ -8,12 +8,12 @@
   <ion-navbar hideBackButton>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> 
+    </button>
     <ion-buttons end>
-      <button *ngIf="auth.language=='en'" ion-button clear color="light" (click)="changeLang('ar')">
+      <button *ngIf="auth.language==='en'" ion-button clear color="light" (click)="changeLang('ar')">
         العربية
       </button>
-      <button *ngIf="auth.language=='ar'" ion-button clear color="light" (click)="changeLang('en')">
+      <button *ngIf="auth.language==='ar'" ion-button clear color="light" (click)="changeLang('en')">
         English
       </button>
       <button (click)="gotoHome()" ion-button icon-only clear color="light">
@@ -28,11 +28,11 @@
   <ion-card (click)="expandItem(item)" *ngFor="let item of items">
     <ion-card-header>
       <!-- <ion-item>{{item.title}} <ion-icon item-end name="heart"></ion-icon> </ion-item> -->
-      {{item.title}} <ion-icon style="float:right" [name]="(item.expanded)?'arrow-down':'arrow-forward'"></ion-icon> 
+      {{item.title}} <ion-icon style="float:right" [name]="(item.expanded)?'arrow-down':'arrow-forward'"></ion-icon>
     </ion-card-header>
 
     <ion-card-content>
-      <expandable  [item]="item"></expandable>
+      <expandable [item]="item"></expandable>
     </ion-card-content>
   </ion-card>
 

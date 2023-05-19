@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController,Events } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HybridProvider } from '../../providers/hybrid/hybrid';
-import { CurrentPage } from '../current/current';
-import { HybridPage } from '../hybrid/hybrid';
-import { ProfilePage } from '../profile/profile';
-import { RegisterPage } from '../register/register';
-import { LoginPage } from '../login/login';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +14,7 @@ export class HomePage {
   items: any[];
   active: any=false;
   loggedin:any=false;
-  constructor(public navCtrl: NavController,public auth : AuthenticationProvider,public common : CommonProvider, public hybrid: HybridProvider,public events: Events) {
+  constructor(public globalEventsService: GlobalEventsService, public navCtrl: NavController,public auth : AuthenticationProvider,public common : CommonProvider, public hybrid: HybridProvider) {
     this.getItems();
     this.hybrid.getHybridCount().subscribe(message => {
       if(message.auction_id!=0)
@@ -57,29 +53,29 @@ export class HomePage {
   }
   current(item)
   {
-    this.navCtrl.push(CurrentPage,{
-      item:item
+    this.navCtrl.navigateForward('/current',{
+      state:{item:item}
       });
   }
   hybridpage()
   {
-    this.navCtrl.push(HybridPage);
+    this.navCtrl.navigateForward('/hybrid');
   }
   changeLang(lang)
   {
     this.auth.language=lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
   gotoProfile()
   {
-    this.navCtrl.push(ProfilePage);
+    this.navCtrl.navigateForward('/profile');
   }
   login()
   {
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.navigateForward('/login');
   }
   register()
   {
-    this.navCtrl.push(RegisterPage);
+    this.navCtrl.navigateForward('/register');
   }
 }

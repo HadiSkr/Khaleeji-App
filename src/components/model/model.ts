@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 /**
  * Generated class for the ModelComponent component.
  *
@@ -14,7 +14,7 @@ export class ModelComponent {
   models: any=[];
   initial: any=[];
 
-  constructor(public viewCtrl: ViewController,public navParams: NavParams) {
+  constructor(public modalCtrl: ModalController,public navParams: NavParams) {
     this.models = this.navParams.get('models');
     this.initial = this.navParams.get('models');
   }
@@ -37,7 +37,7 @@ export class ModelComponent {
   }
   selectModel(model)
   {
-    this.viewCtrl.dismiss(model);
+    this.modalCtrl.dismiss(model);
   }
 
 }

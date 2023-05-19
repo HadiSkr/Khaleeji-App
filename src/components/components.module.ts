@@ -9,6 +9,8 @@ import { RectangleComponent } from './rectangle/rectangle';
 import { ModelComponent } from './model/model';
 import {TranslateModule} from '@ngx-translate/core';
 import { DropdownComponent } from './dropdown/dropdown';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -19,7 +21,7 @@ import { DropdownComponent } from './dropdown/dropdown';
     RectangleComponent,
     ModelComponent,
     DropdownComponent],
-	imports: [IonicModule,PipesModule,TranslateModule.forRoot()],
+	imports: [FormsModule, CommonModule, IonicModule,PipesModule,TranslateModule.forRoot()],
 	exports: [BoxComponent,
 	FilterComponent,
     MakeComponent,
@@ -27,11 +29,5 @@ import { DropdownComponent } from './dropdown/dropdown';
     RectangleComponent,
     ModelComponent,
     DropdownComponent],
-	entryComponents: [
-		FilterComponent,
-        MakeComponent,
-        ModelComponent,
-        DropdownComponent
-	  ]
 })
 export class ComponentsModule {}

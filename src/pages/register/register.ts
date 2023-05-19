@@ -36,7 +36,7 @@ export class RegisterPage {
   ionViewDidLoad() {
   }
 
-  logForm(data) {
+  async logForm(data) {
     let inputs = data.value;
     inputs.newsletter=0;
     inputs.language='EN';
@@ -56,7 +56,7 @@ export class RegisterPage {
         else if(data['status']=="success")
         {
           this.presentToast(data['msg'])
-          this.navCtrl.push(LoginPage);
+          this.navCtrl.navigateForward('/login');
         }
       })
   }
@@ -64,7 +64,7 @@ export class RegisterPage {
   {
     this.type=(this.todo.type=='individual')?'i':'o';
   }
-  presentToast(msg) {
+  async presentToast(msg) {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 3000

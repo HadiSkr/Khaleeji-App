@@ -12,7 +12,7 @@ export class GlobalEventsService {
         this.globalEvent.next(data);
     }
 
-    getObservable(): Subject<any> {
+    getObservable() {
         return this.globalEvent;
     }
 }

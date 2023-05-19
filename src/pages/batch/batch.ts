@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
@@ -28,11 +27,11 @@ export class BatchPage {
     console.log('ionViewDidLoad BatchPage');
   }
   showBatch(duration){
-    this.navCtrl.push(CurrentPage,{
-      duration:duration
+    this.navCtrl.navigateForward('/current',{
+      state:{duration:duration}
       });
   }
-  getEndDates() {
+  async getEndDates() {
     let loading = await this.loadingCtrl.create({
       message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
     });
@@ -43,15 +42,15 @@ export class BatchPage {
         loading.dismiss();
         if(data['status']=="success")
         {
-          let auctionitemdates = [];
+          let auctionitemdates: any[] = [];
           for(let item of data['results'])
           {
-            var duplicate = auctionitemdates.filter(function(a){
+            var duplicate = auctionitemdates.filter(function(a:any){
               return item.enddate==a.date;
             });
             if(duplicate.length>0)
             {
-              auctionitemdates.map(function(a){
+              auctionitemdates.map(function(a:any){
                 if(item.enddate==a.date){
                   a.count = parseInt(a.count)+parseInt(item.count);
                   a.duration.push(item.id);

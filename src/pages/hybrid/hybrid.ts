@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Slides, LoadingController, ToastController, Nav, Events, Platform } from '@ionic/angular';
+import { NavController, NavParams, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { HybridProvider } from '../../providers/hybrid/hybrid';
 import { LoginPage } from '../../pages/login/login';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +8,8 @@ import { HomePage } from '../home/home';
 import * as _ from 'lodash';
 import { Socket } from 'ng-socket-io';
 import { Subscription } from 'rxjs';
+import { GlobalEventsService } from '../../providers/observables/observable';
+import { Swiper } from 'swiper/types';
 /**
  * Generated class for the HybridPage page.
  *
@@ -20,12 +22,12 @@ import { Subscription } from 'rxjs';
   templateUrl: 'hybrid.html',
 })
 export class HybridPage {
-  @ViewChild('slides') slides: Slides;
+  @ViewChild('slides') slides: Swiper
   price: any;
   auction_id: any;
   limit: any;
   resumeListener:Subscription=new Subscription();
-  constructor(public auth: AuthenticationProvider, public navCtrl: NavController, public navParams: NavParams, public hybrid: HybridProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public socket: Socket, public nav: Nav, public events: Events, public http: HttpClient, public platform: Platform) {
+  constructor(public globalEventsService: GlobalEventsService,public auth: AuthenticationProvider, public navCtrl: NavController, public navParams: NavParams, public hybrid: HybridProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public socket: Socket, public http: HttpClient, public platform: Platform) {
     /* foreground and background toggle functions */
     if (this.platform.is('cordova')){
 
@@ -98,11 +100,11 @@ export class HybridPage {
         }
       });
   }
-  bid(id) {
+  async bid(id) {
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -122,11 +124,11 @@ export class HybridPage {
     };
     this.socket.emit('hybridbid', combined);
   }
-  custombid(id) {
+  async custombid(id) {
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -160,7 +162,7 @@ export class HybridPage {
     this.socket.emit('hybridbid', combined);
     this.price = ''
   }
-  presentToast(msg) {
+  async presentToast(msg) {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 3000
@@ -168,11 +170,11 @@ export class HybridPage {
     toast.present();
   }
   gotoHome() {
-    this.nav.setRoot(HomePage);
+    this.navCtrl.navigateRoot('/');
   }
   changeLang(lang) {
     this.auth.language = lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
   nextSlide() {
     this.slides.slideNext();

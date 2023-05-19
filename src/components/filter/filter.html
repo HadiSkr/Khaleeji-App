@@ -42,16 +42,16 @@
     </ion-item>
     <ion-item>
       <ion-label col-3>{{ 'filter.year' | translate }} </ion-label>
-      
+
       <ion-select col-4 [(ngModel)]="searchtab.year_from" placeholder="{{ 'filter.from' | translate }}">
-        <ion-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-option>
+        <ion-select-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-select-option>
       </ion-select>
-      
+
       <ion-select col-4 [(ngModel)]="searchtab.year_to" placeholder="{{ 'filter.to' | translate }}">
-        <ion-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-option>
+        <ion-select-option *ngFor="let item of yearsdropdown" [value]="item.value">{{ item.value }}</ion-select-option>
       </ion-select>
     </ion-item>
-    
+
   </ion-list>
 
   <ion-list *ngSwitchCase="'make'">
@@ -80,8 +80,8 @@
         <ion-checkbox [(ngModel)]="advancedtab[check.auto]" color="dark" ></ion-checkbox>
       </ion-item>
     </div>
-    
-    
+
+
   </ion-item-group>
 </div>
 <ion-row>

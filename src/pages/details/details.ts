@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, Events, AlertController } from '@ionic/angular';
+import { NavController, NavParams, LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 
 /**
@@ -35,7 +36,7 @@ export class DetailsPage {
   hybridclosed: any = false;
   description: any = '';
   supendPriceUpdate: any = false;
-  constructor(public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public navParams: NavParams, public socket: Socket, public nav: Nav, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public events: Events, public alertCtrl: AlertController, public http: HttpClient) {
+  constructor(public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public navParams: NavParams, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
     this.id = this.navParams.get('id');
     this.getDetails(this.id);
     this.getUpdates().subscribe(message => {
@@ -62,15 +63,22 @@ export class DetailsPage {
         }
       }
     });
-    events.subscribe('app:languagechanged', () => {
-      this.getDetails(this.id);
-    });
+    const _this = this;
+    globalEventsService.getObservable().subscribe({
+      next(value) {
+        if(value == 'app:languagechanged')
+        _this.getDetails(_this.id);
+      },
+      error(err){
+
+      }
+  });
   }
   checkHybridActive() {
     if (this.auction.ends <= 0) {
       if (this.hybridclosed == false) {
         //got ot hybrid page
-        this.navCtrl.push(HybridPage);
+        this.navCtrl.navigateForward('/hybrid');
         return true;
       }
       else {
@@ -86,9 +94,9 @@ export class DetailsPage {
   favorite() {
     let json;
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -169,7 +177,7 @@ export class DetailsPage {
     this.link = this.sanitizer.bypassSecurityTrustResourceUrl('https://maps.google.com/maps?q=' + details.latitude + ', ' + details.longitude + '&z=15&output=embed');
   }
   gotoHome() {
-    this.nav.setRoot(HomePage);
+    this.navCtrl.navigateRoot('/');
   }
   nextSlide() {
     this.slides.nativeElement.slideNext();
@@ -180,9 +188,9 @@ export class DetailsPage {
   bid() {
     let json;
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -215,9 +223,9 @@ export class DetailsPage {
   }
   custombid() {
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -287,9 +295,9 @@ export class DetailsPage {
   }
   async showAutoBidPrompt() {
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
@@ -384,7 +392,7 @@ export class DetailsPage {
   }
   changeLang(lang) {
     this.auth.language = lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
 
 }

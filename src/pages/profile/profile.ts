@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, Nav } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { HomePage } from '../home/home';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 /**
  * Generated class for the ProfilePage page.
@@ -18,7 +19,7 @@ import { HomePage } from '../home/home';
 export class ProfilePage {
 
   profile:any={};
-  constructor(public nav:Nav, public navCtrl: NavController, public navParams: NavParams,public common : CommonProvider, public auth:AuthenticationProvider,public events: Events) {
+  constructor(public globalEventsService: GlobalEventsService, public navCtrl: NavController, public navParams: NavParams,public common : CommonProvider, public auth:AuthenticationProvider) {
     this.getMydata();
   }
 
@@ -54,10 +55,10 @@ export class ProfilePage {
   changeLang(lang)
   {
     this.auth.language=lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
   gotoHome()
   {
-    this.nav.setRoot(HomePage);
+    this.navCtrl.navigateRoot('/');
   }
 }

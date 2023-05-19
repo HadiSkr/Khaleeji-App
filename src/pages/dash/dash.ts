@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Nav, Events } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 import { HomePage } from '../home/home';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { TranslateService } from '@ngx-translate/core';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 
 /**
@@ -18,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class DashPage {
   items: any = [];
-  constructor(public translate: TranslateService,public navCtrl: NavController, public navParams: NavParams, public nav:Nav, public auth:AuthenticationProvider, public events: Events) {
+  constructor(public globalEventsService: GlobalEventsService,public translate: TranslateService,public navCtrl: NavController, public navParams: NavParams, public auth:AuthenticationProvider) {
 
     this.items = [
       { title:'',expanded: false, tab:"mybids" },
@@ -33,9 +34,17 @@ export class DashPage {
       this.dropTab(this.navParams.get('tab'));
     }
     this.applyLanguage();
-    events.subscribe('app:languagechanged',()=>{
-      this.translate.setDefaultLang(this.auth.language);
-      this.applyLanguage();
+    const _this = this;
+    globalEventsService.getObservable().subscribe({
+      next(position) {
+        if(position == 'app:languagechanged'){
+          _this.translate.setDefaultLang(_this.auth.language);
+          _this.applyLanguage();
+        }
+      },
+      error(msg) {
+        console.log('Error Getting Location: ', msg);
+      }
     });
   }
   dropTab(tab)
@@ -66,12 +75,12 @@ export class DashPage {
   }
   gotoHome()
   {
-    this.nav.setRoot(HomePage);
+    this.navCtrl.navigateRoot('/');
   }
   changeLang(lang)
   {
     this.auth.language=lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
   applyLanguage()
   {

@@ -23,7 +23,7 @@
   </form>
   <button ion-button color="primary" block (click)="submit(loginForm)" [disabled]="!loginForm.valid">Log in</button>
  -->
- 
+
   <div class="login-page">
     <img src="assets/imgs/logo.png"/>
     <div class="form">
@@ -37,7 +37,7 @@
           <br>
           <div *ngIf="pass.errors && (pass.dirty || pass.touched)" title="password required" class="alert-tooltip"></div>
           <ion-item>
-            <ion-input [(ngModel)]="login.Pass" placeholder="password" name="password" type="password" #pass="ngModel" required>
+            <ion-input [(ngModel)]="login.password" placeholder="password" name="password" type="password" #pass="ngModel" required>
             </ion-input>
           </ion-item>
         </ion-list>

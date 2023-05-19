@@ -3,7 +3,6 @@ import { CommonProvider } from '../../providers/common/common';
 import { DetailsPage } from '../../pages/details/details';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import {LoadingController, ToastController, NavController, AlertController} from '@ionic/angular';
-import { LoginPage } from '../../pages/login/login';
 
 /**
  * Generated class for the RectangleComponent component.
@@ -26,11 +25,11 @@ export class RectangleComponent {
   ngOnInit() {
     this.auction = this.step;
   }
-  bid(id)
+  async bid(id)
   {
     if(this.auth.userId==-1)
     {
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.navigateForward('/login');
       return false;
     }
     let loading = await this.loadingCtrl.create({
@@ -55,7 +54,7 @@ export class RectangleComponent {
   favorite(auc) {
       if(this.auth.userId==-1)
       {
-          this.navCtrl.push(LoginPage);
+          this.navCtrl.navigateForward('/login');
           return false;
       }
       /*let loading = await this.loadingCtrl.create({
@@ -80,11 +79,11 @@ export class RectangleComponent {
               }
           });
   }
-    showAutoBidPrompt(auc) {
+    async showAutoBidPrompt(auc) {
         if (this.auth.userId == -1) {
-            this.navCtrl.push(LoginPage,
+            this.navCtrl.navigateForward('/login',
                 {
-                    prev: true
+                    state:{prev: true}
                 });
             return false;
         }
@@ -92,7 +91,7 @@ export class RectangleComponent {
             this.showAutoBidCancelConfirm();
         }else{
             const prompt = await this.alertCtrl.create({
-                title: 'Auto Bid',
+                header: 'Auto Bid',
                 message: "Enter maximum bid",
                 inputs: [
                     {
@@ -142,7 +141,7 @@ export class RectangleComponent {
 
             });
     }
-    showAutoBidCancelConfirm() {
+    async showAutoBidCancelConfirm() {
       //console.log(this.auction);
         const confirm = await this.alertCtrl.create({
             header: 'Cancel Auto Bid.',
@@ -185,11 +184,11 @@ export class RectangleComponent {
 
             });
     }
-  custombid(id)
+  async custombid(id)
   {
     if(this.auth.userId==-1)
     {
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.navigateForward('/login');
       return false;
     }
     let currentprice= parseInt(this.auction.current_bid.replace(/,/g, ''));
@@ -227,7 +226,7 @@ export class RectangleComponent {
 
       });
   }
-  presentToast(msg) {
+  async presentToast(msg) {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 3000
@@ -236,8 +235,8 @@ export class RectangleComponent {
   }
   gotoDetails(id)
   {
-    this.navCtrl.push(DetailsPage,{
-      id:id
+    this.navCtrl.navigateForward('/details',{
+      state:{id:id}
       });
   }
 

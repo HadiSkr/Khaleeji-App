@@ -7,10 +7,10 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons end>
-      <button *ngIf="auth.language=='en'" ion-button clear color="light" (click)="changeLang('ar')">
+      <button *ngIf="auth.language=== 'en'" ion-button clear color="light" (click)="changeLang('ar')">
         العربية
       </button>
-      <button *ngIf="auth.language=='ar'" ion-button clear color="light" (click)="changeLang('en')">
+      <button *ngIf="auth.language=== 'ar'" ion-button clear color="light" (click)="changeLang('en')">
         English
       </button>
       <button (click)="gotoHome()" ion-button icon-only clear color="light">
@@ -21,20 +21,20 @@
 </ion-header>
 <ion-content>
 
-  <div *ngIf="auction_id==0">
+  <div *ngIf="auction_id=== 0">
     <ion-item text-center d-block>{{ 'details.nohybrid' | translate }}</ion-item>
   </div>
-  <div *ngIf="auction_id!=0">
+  <div *ngIf="auction_id!==0">
     <div *ngIf="(getBox().images)?((getBox().images.length>1)?true:false):false" class="swiper-button-next" tappable
       (click)="nextSlide()"></div>
     <div *ngIf="(getBox().images)?((getBox().images.length>1)?true:false):false" class="swiper-button-prev" tappable
       (click)="prevSlide()"></div>
     <div style="height:220px">
-      <ion-slides *ngIf="getBox().images" loop #slides>
-        <ion-slide *ngFor="let s of getBox().images">
+      <swiper-container *ngIf="getBox().images" loop #slides>
+        <swiper-slide *ngFor="let s of getBox().images">
           <img [src]="s.original_path">
-        </ion-slide>
-      </ion-slides>
+        </swiper-slide>
+      </swiper-container>
     </div>
 
     <ion-list style="margin-bottom: 20px;" *ngIf="getBox().title">
@@ -64,7 +64,7 @@
     <!-- <ion-row>
         <ion-col text-center border-bottom-all>
           Bid<br/>
-          <button ion-button full (click)="bid(getBox().id)" [color]="(getBox().highestbidder)? 'secondary' : 'danger'">{{getBox().current_bid | bidprice }}</button> 
+          <button ion-button full (click)="bid(getBox().id)" [color]="(getBox().highestbidder)? 'secondary' : 'danger'">{{getBox().current_bid | bidprice }}</button>
         </ion-col>
       </ion-row> -->
 
@@ -88,7 +88,7 @@
 
   </div>
 </ion-content>
-<ion-footer *ngIf="auction_id!=0">
+<ion-footer *ngIf="auction_id!==0">
   <ion-toolbar>
     <ion-row>
       <ion-col col-5 class="footer-items" text-center>

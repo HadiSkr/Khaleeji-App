@@ -6,19 +6,19 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ title }}</ion-title>
+    <ion-title>{{ "" }}</ion-title>
     <ion-buttons end>
-      <button *ngIf="auth.language=='en'" ion-button (click)="changeLang('ar')">
+      <button *ngIf="auth.language=== 'en'" ion-button (click)="changeLang('ar')">
         العربية
       </button>
-      <button *ngIf="auth.language=='ar'" ion-button (click)="changeLang('en')">
+      <button *ngIf="auth.language=== 'ar'" ion-button (click)="changeLang('en')">
         English
       </button>
       <button (click)="gotoHome()" ion-button icon-only>
         <ion-icon  name="home"></ion-icon>
       </button>
       <button ion-button (click)="presentPopover($event)"><ion-icon name="search"></ion-icon></button>
-      <button *ngIf="auth.userId!=-1" ion-button (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></button>
+      <button *ngIf="auth.userId!==-1" ion-button (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar vanish-scroll [vanish-scroll]="scrollArea" (parentFun)="contentResize()">
@@ -31,15 +31,15 @@
     </ion-col>
     <button ion-button color="dark" (click)="changeInsta()" clear>Instagram</button>
       <button color="dark" ion-button icon-only outline float-right  (click)="changeView()">
-        <ion-icon [name]="(view=='grid')?'list':'grid'"></ion-icon>
+        <ion-icon [name]="(view=== 'grid')?'list':'grid'"></ion-icon>
       </button>
   </ion-toolbar>
 </ion-header>
 <ion-content #scrollArea scrollEvents="true" (ionScroll)="logScrolling($event)">
-  <ion-list *ngIf="view=='grid'">
+  <ion-list *ngIf="view=== 'grid'">
     <box *ngFor="let auction of auctions" [step]="auction"></box>
   </ion-list>
-  <ion-list *ngIf="view=='list'">
+  <ion-list *ngIf="view=== 'list'">
     <rectangle *ngFor="let auction of auctions" [step]="auction"></rectangle>
   </ion-list>
 </ion-content>

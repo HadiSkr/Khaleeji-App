@@ -35,8 +35,8 @@ export class BoxComponent {
       this.shareInstagram(id);
     }
     else{
-      this.navCtrl.push(DetailsPage,{
-        id:id
+      this.navCtrl.navigateForward('/details',{
+          state:{id:id}
         });
     }
   }
@@ -82,7 +82,7 @@ export class BoxComponent {
     {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.push(LoginPage);
+            this.navCtrl.navigateForward('/login');
             return false;
         }
         let loading = await this.loadingCtrl.create({
@@ -106,7 +106,7 @@ export class BoxComponent {
     favorite(auc) {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.push(LoginPage);
+            this.navCtrl.navigateForward('/login');
             return false;
         }
         /*let loading = await this.loadingCtrl.create({
@@ -133,9 +133,9 @@ export class BoxComponent {
     }
     async showAutoBidPrompt(auc) {
         if (this.auth.userId == -1) {
-            this.navCtrl.push(LoginPage,
+            this.navCtrl.navigateForward('/login',
                 {
-                    prev: true
+                    state:{prev: true}
                 });
             return false;
         }
@@ -238,7 +238,7 @@ export class BoxComponent {
     {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.push(LoginPage);
+            this.navCtrl.navigateForward('/login');
             return false;
         }
         let currentprice= parseInt(this.auction.current_bid.replace(/,/g, ''));

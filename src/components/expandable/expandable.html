@@ -27,7 +27,7 @@
                     <ion-col col-3>{{ 'dash.status' | translate }}</ion-col>
                     <ion-col col-3>{{ 'dash.uploadpayment' | translate }}</ion-col>
                 </ion-row>
-                <ion-row *ngIf="purchases.length==0" nowrap>
+                <ion-row *ngIf="purchases.length=== 0" nowrap>
                     <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let pr of purchases" nowrap>
@@ -54,7 +54,7 @@
                     <ion-col col-3>{{ 'dash.buyeroffer' | translate }}</ion-col>
                     <ion-col col-3>{{ 'dash.sellerstatus' | translate }}</ion-col>
                 </ion-row>
-                <ion-row *ngIf="unsold.length==0" nowrap>
+                <ion-row *ngIf="unsold.length=== 0" nowrap>
                     <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let un of unsold" nowrap>
@@ -78,7 +78,7 @@
                     <ion-col col-3>{{ 'dash.status' | translate }}</ion-col>
                     <ion-col col-3>{{ 'dash.duedate' | translate }}</ion-col>
                 </ion-row>
-                <ion-row *ngIf="invoice.length==0" nowrap>
+                <ion-row *ngIf="invoice.length=== 0" nowrap>
                     <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let in of invoice" nowrap>
@@ -102,7 +102,7 @@
                     <ion-col col-3>{{ 'dash.bankname' | translate }}</ion-col>
                     <ion-col col-3>{{ 'dash.bankaccount' | translate }}</ion-col>
                 </ion-row>
-                <ion-row *ngIf="payment.length==0" nowrap>
+                <ion-row *ngIf="payment.length=== 0" nowrap>
                     <ion-col col text-center>{{ 'dash.no_data' | translate }}</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let pm of payment" nowrap>

@@ -1,9 +1,10 @@
 import { HomePage } from '../home/home';
 import { Component, ViewChild } from '@angular/core';
-import { Nav, NavController, NavParams, ToastController, LoadingController,Events } from '@ionic/angular';
+import { NavController, NavParams, ToastController, LoadingController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 import { RegisterPage } from '../register/register';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 
 /**
@@ -20,7 +21,7 @@ import { RegisterPage } from '../register/register';
 export class LoginPage {
   prev:any;
   login: { username?: string, password?: string } = {};
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public auth : AuthenticationProvider, public toastCtrl: ToastController,public events: Events) {
+  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public auth : AuthenticationProvider, public toastCtrl: ToastController) {
     this.prev=this.navParams.get('prev');
   }
   ionViewDidLoad() {
@@ -28,7 +29,7 @@ export class LoginPage {
 
   }
   // go to home page
-  submit(loginForm) {
+  async submit(loginForm) {
     let loading = await this.loadingCtrl.create({
       message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
     });
@@ -49,19 +50,19 @@ export class LoginPage {
           /* this.navCtrl.push(HomePage, {
             item: '2'
           }); */
-          this.events.publish('user:loggedin');
+          this.globalEventsService.publish('user:loggedin');
           if(this.prev==true)
           {
             this.navCtrl.pop();
           }
           else
           {
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.navigateRoot('/');
           }
         }
       })
   }
-  presentToast(msg) {
+  async presentToast(msg) {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 3000
@@ -70,7 +71,7 @@ export class LoginPage {
   }
   register()
   {
-    this.navCtrl.push(RegisterPage);
+    this.navCtrl.navigateForward('/register');
   }
 
 }

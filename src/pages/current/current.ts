@@ -1,17 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, PopoverController, LoadingController, Nav, Content, Events, Platform } from '@ionic/angular';
+import { NavController, NavParams, PopoverController, LoadingController, IonContent, Platform } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { HomePage } from '../home/home';
 import { FilterComponent } from '../../components/filter/filter';
 import { DropdownComponent } from '../../components/dropdown/dropdown';
 import { Socket } from 'ng-socket-io';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { ProfilePage } from '../profile/profile';
 import { LoginPage } from '../../pages/login/login';
 import { DashPage } from '../../pages/dash/dash';
 import { HybridPage } from '../../pages/hybrid/hybrid';
+import { GlobalEventsService } from '../../providers/observables/observable';
 
 /**
  * Generated class for the CurrentPage page.
@@ -25,7 +25,7 @@ import { HybridPage } from '../../pages/hybrid/hybrid';
   templateUrl: 'current.html',
 })
 export class CurrentPage {
-  @ViewChild(Content) content: Content;
+  @ViewChild(IonContent) content: IonContent;
   auctions: any[] = [];
   enddates: any = [];
   newauctions: any = [];
@@ -35,7 +35,7 @@ export class CurrentPage {
   instagram: any = false;
   resumeListener:Subscription=new Subscription();
   data: any = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
-  constructor(public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider, public socket: Socket, public nav: Nav, public events: Events, public platform: Platform) {
+  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider, public socket: Socket, public platform: Platform) {
     /* foreground and background toggle functions */
     if (this.platform.is('cordova')) {
 
@@ -54,7 +54,7 @@ export class CurrentPage {
     this.totalauctions = this.navParams.get('item').count;
     this.getAuctions();
     this.getEndDates();
-    this.getUpdates().subscribe(message => {
+    this.getUpdates().subscribe((message:any) => {
       let data = message.view;
       let userId = this.auth.userId
       for (let id in data) {
@@ -78,7 +78,7 @@ export class CurrentPage {
   }
   contentResize() {
     let self = this;
-    setTimeout(function () { self.content.resize(); }, 250);
+    setTimeout(function () { self.content.fullscreen }, 250);
 
   }
   logScrolling(event) {
@@ -88,7 +88,7 @@ export class CurrentPage {
     this.instagram = !this.instagram;
   }
   loadImageOntheGo(position) {
-    let height: number, col: number, item: number, current: number, newauctions: any = [];
+    let height!: number, col!: number, item!: number, current!: number, newauctions: any = [];
 
     if (this.view == 'grid') {
       height = 185;
@@ -114,7 +114,7 @@ export class CurrentPage {
   }
   loadImage(newauctions) {
     /* changing arry structure */
-    let newa = [];
+    let newa: any[] = [];
     newauctions.map(function (a) {
       newa.push(a.id);
     })
@@ -145,22 +145,22 @@ export class CurrentPage {
   }
   goto(page) {
     if (this.auth.userId == -1) {
-      this.navCtrl.push(LoginPage,
+      this.navCtrl.navigateForward('/login',
         {
-          prev: true
+          state:{prev: true}
         });
       return false;
     }
-    this.navCtrl.push(DashPage, { tab: page });
+    this.navCtrl.navigateForward('/dash', {state: { tab: page }});
 
   }
   gotoHybrid() {
-    this.navCtrl.push(HybridPage);
+    this.navCtrl.navigateForward('/hybrid');
   }
   gotoProfile() {
-    this.navCtrl.push(ProfilePage);
+    this.navCtrl.navigateForward('/profile');
   }
-  getAuctions() {
+  async getAuctions() {
     this.newauctions = [];
 
     let loading = await this.loadingCtrl.create({
@@ -194,7 +194,7 @@ export class CurrentPage {
   ionViewWillLeave() {
     this.resumeListener.unsubscribe();
   }
-  searchAuctions(json) {
+  async searchAuctions(json) {
     this.newauctions = [];
     this.data = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
     let loading = await this.loadingCtrl.create({
@@ -245,42 +245,41 @@ export class CurrentPage {
       return (item.active == true);
     });
   }
-  getUpdates(): Observable<any> {
-    let observable = new Observable(observer => {
+  getUpdates(){
+    let observable = new Subject();
       this.socket.on('updates', (data) => {
-        observer.next(JSON.parse(data));
+        observable.next(JSON.parse(data));
       });
-    })
     return observable;
   }
-  presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(FilterComponent, {}, { cssClass: 'filter-popover' });
-    popover.present({
-      ev: myEvent
-    });
-    popover.onDidDismiss(order => {
+  async presentPopover(myEvent) {
+    let popover = await this.popoverCtrl.create({
+      component: FilterComponent,
+      cssClass: 'filter-popover'});
+    popover.present(myEvent);
+    popover.onDidDismiss().then(order => {
       if (order != null) {
         console.log(order);
         this.searchAuctions(order);
       }
     });
   }
-  presentEndPopover(myEvent) {
-    let popover = this.popoverCtrl.create(DropdownComponent, { enddates: this.enddates }, { cssClass: 'dropdown-popover' });
-    popover.present({
-      ev: myEvent
-    });
-    popover.onDidDismiss(order => {
+  async presentEndPopover(myEvent) {
+    let popover = await this.popoverCtrl.create({
+      component: DropdownComponent,
+      cssClass: 'dropdown-popover'});
+    popover.present(myEvent);
+    popover.onDidDismiss().then(order => {
       if (order != null) {
         this.enddates.map((item) => {
-          if (item.enddate == order.enddate) {
+          if (item.enddate == order.data.enddate) {
             item.active = true;
           }
           else {
             item.active = false;
           }
         });
-        this.searchAuctions({ auctionenddate: order.duration });
+        this.searchAuctions({ auctionenddate: order.data.duration });
       }
     });
   }
@@ -303,11 +302,11 @@ export class CurrentPage {
       });
   }
   gotoHome() {
-    this.nav.setRoot(HomePage);
+    this.navCtrl.navigateRoot('/');
   }
   changeLang(lang) {
     this.auth.language = lang;
-    this.events.publish('app:languagechanged');
+    this.globalEventsService.publish('app:languagechanged');
   }
 
 }

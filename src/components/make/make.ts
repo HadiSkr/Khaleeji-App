@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { CacheProvider } from '../../providers/cache/cache';
 
@@ -18,7 +18,7 @@ export class MakeComponent {
   makes: any=[];
   initial: any=[];
 
-  constructor(public viewCtrl: ViewController, public cache: CacheProvider,public common : CommonProvider) {
+  constructor(public modalCtrl: ModalController, public cache: CacheProvider,public common : CommonProvider) {
     this.getMakes();
   }
   getMakes()
@@ -63,7 +63,7 @@ export class MakeComponent {
   }
   selectMake(make)
   {
-    this.viewCtrl.dismiss(make);
+    this.modalCtrl.dismiss(make);
   }
 
 }
