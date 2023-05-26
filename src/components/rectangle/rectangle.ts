@@ -12,7 +12,8 @@ import {LoadingController, ToastController, NavController, AlertController} from
  */
 @Component({
   selector: 'rectangle',
-  templateUrl: 'rectangle.html'
+  templateUrl: 'rectangle.html',
+  styleUrls: ['./rectangle.scss']
 })
 export class RectangleComponent {
 
@@ -29,11 +30,11 @@ export class RectangleComponent {
   {
     if(this.auth.userId==-1)
     {
-      this.navCtrl.navigateForward('/login');
+      this.navCtrl.navigateForward('login');
       return false;
     }
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     let json = {"userId" : this.auth.userId,"bidamount" : 500,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};
@@ -54,11 +55,11 @@ export class RectangleComponent {
   favorite(auc) {
       if(this.auth.userId==-1)
       {
-          this.navCtrl.navigateForward('/login');
+          this.navCtrl.navigateForward('login', {replaceUrl: true});
           return false;
       }
       /*let loading = await this.loadingCtrl.create({
-          message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
       });
 
       loading.present();*/
@@ -81,9 +82,10 @@ export class RectangleComponent {
   }
     async showAutoBidPrompt(auc) {
         if (this.auth.userId == -1) {
-            this.navCtrl.navigateForward('/login',
+            this.navCtrl.navigateForward('login',
                 {
-                    state:{prev: true}
+                    state:{prev: true},
+                    replaceUrl: true
                 });
             return false;
         }
@@ -121,7 +123,7 @@ export class RectangleComponent {
     autoBid(amount,auc) {
 
         /*let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();*/
         this.presentToast('Auto Bid has been activated');
@@ -166,7 +168,7 @@ export class RectangleComponent {
         //this.presentToast(data['msg']);
         //console.log(this.auction);
         /*let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();*/
         this.presentToast('Auto Bid was cancelled');
@@ -188,7 +190,7 @@ export class RectangleComponent {
   {
     if(this.auth.userId==-1)
     {
-      this.navCtrl.navigateForward('/login');
+      this.navCtrl.navigateForward('login', {replaceUrl: true});
       return false;
     }
     let currentprice= parseInt(this.auction.current_bid.replace(/,/g, ''));
@@ -208,7 +210,7 @@ export class RectangleComponent {
       return false;
     }
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     let json = {"userId" : this.auth.userId,"bidamount" : this.price-currentprice,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};
@@ -235,8 +237,9 @@ export class RectangleComponent {
   }
   gotoDetails(id)
   {
-    this.navCtrl.navigateForward('/details',{
-      state:{id:id}
+    this.navCtrl.navigateForward('details',{
+      state:{id:id},
+      replaceUrl: true
       });
   }
 

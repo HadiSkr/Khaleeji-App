@@ -25,11 +25,11 @@
         <div *ngIf="(auction.images)?((auction.images.length>1)?true:false):false" class="swiper-button-next" tappable (click)="nextSlide()"></div>
         <div *ngIf="(auction.images)?((auction.images.length>1)?true:false):false" class="swiper-button-prev" tappable (click)="prevSlide()" style="right: unset;"></div>
         <div style="height:200px">
-            <ion-slides *ngIf="auction.images" loop #slides>
-                <ion-slide *ngFor="let s of auction.images">
+            <swiper-container *ngIf="auction.images" loop #slides>
+                <swiper-slide *ngFor="let s of auction.images">
                     <img [src]="(s.original_path)?s.original_path:s">
-                </ion-slide>
-            </ion-slides>
+                </swiper-slide>
+            </swiper-container>
         </div>
     </div>
 

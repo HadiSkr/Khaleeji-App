@@ -75,7 +75,7 @@ export class DashPage {
   }
   gotoHome()
   {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('');
   }
   changeLang(lang)
   {

@@ -98,7 +98,7 @@ export class FilterComponent {
       return true;
     }
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     this.common.getModels(this.searchtab.make).subscribe(

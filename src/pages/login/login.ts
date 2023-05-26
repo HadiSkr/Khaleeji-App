@@ -1,10 +1,11 @@
 import { HomePage } from '../home/home';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavController, NavParams, ToastController, LoadingController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 
 import { RegisterPage } from '../register/register';
 import { GlobalEventsService } from '../../providers/observables/observable';
+import { Router } from '@angular/router';
 
 
 /**
@@ -17,12 +18,14 @@ import { GlobalEventsService } from '../../providers/observables/observable';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
+  styleUrls: ['./login.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginPage {
   prev:any;
   login: { username?: string, password?: string } = {};
-  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public auth : AuthenticationProvider, public toastCtrl: ToastController) {
-    this.prev=this.navParams.get('prev');
+  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public navCtrl: NavController, public router: Router, public auth : AuthenticationProvider, public toastCtrl: ToastController) {
+    this.prev=router.getCurrentNavigation()?.extras.state?.['prev'];
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
@@ -31,7 +34,7 @@ export class LoginPage {
   // go to home page
   async submit(loginForm) {
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     this.auth.login(loginForm.value).subscribe(
@@ -57,7 +60,7 @@ export class LoginPage {
           }
           else
           {
-            this.navCtrl.navigateRoot('/');
+            this.navCtrl.navigateRoot('', {replaceUrl: true});
           }
         }
       })
@@ -71,7 +74,14 @@ export class LoginPage {
   }
   register()
   {
-    this.navCtrl.navigateForward('/register');
+    this.navCtrl.navigateForward('register');
   }
 
+  changeLang(lang) {
+    this.auth.language = lang;
+    this.globalEventsService.publish('app:languagechanged');
+  }
 }
+
+
+// message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'

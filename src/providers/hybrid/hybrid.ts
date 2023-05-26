@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { AuthenticationProvider } from '../authentication/authentication';
 import * as CryptoJS from 'crypto-js';
-import { Device } from '@awesome-cordova-plugins/device/ngx';
+import { Injectable } from '@angular/core';
+import { Device } from '@capacitor/device';
 
 
 
@@ -14,12 +15,17 @@ import { Device } from '@awesome-cordova-plugins/device/ngx';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-
+@Injectable({providedIn: 'root'})
 export class HybridProvider {
   hybridfeed: any = {};
   hybridUpdates: any = {};
   auction: any = {};
-  constructor(public http: HttpClient, public socket: Socket, public auth: AuthenticationProvider, private device: Device) {
+  deviceId: string = "";
+  constructor(public http: HttpClient, public socket: Socket, public auth: AuthenticationProvider) {
+    const self = this;
+    Device.getId().then(res => {
+      self.deviceId = res.identifier;
+    })
     this.getHybridCount().subscribe(message => {
       this.hybridfeed = message;
       if (this.hybridfeed.auction_id != 0) {
@@ -99,7 +105,7 @@ export class HybridProvider {
   }
   credentials() {
     let data = {
-      deviceID: CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.auth.secretKey, { format: this.auth.CryptoJSAesJson }).toString(),
+      deviceID: CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.auth.secretKey, { format: this.auth.CryptoJSAesJson }).toString(),
       userId: CryptoJS.AES.encrypt(JSON.stringify(this.auth.userId), this.auth.secretKey, { format: this.auth.CryptoJSAesJson }).toString(),
       token: this.auth.token
     }

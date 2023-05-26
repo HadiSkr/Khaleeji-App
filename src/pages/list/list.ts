@@ -34,7 +34,7 @@ export class ListPage {
 
   itemTapped(event, item) {
     // That's right, we're pushing to ourselves!
-    this.navCtrl.navigateForward('/list', {
+    this.navCtrl.navigateForward('list', {
       state:{
         item
       }

@@ -5,22 +5,34 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-    <ion-navbar>
-        <ion-title>Register</ion-title>
-    </ion-navbar>
+  <ion-toolbar>
+    <ion-title slot="center">Register</ion-title>
+      <ion-back-button slot="start" defaultHref="#"></ion-back-button>
+      <ion-button slot="end" *ngIf="auth.language==='en'"  fill="clear" color="light" (click)="changeLang('ar')">
+        العربية
+      </ion-button>
+      <ion-button slot="end" *ngIf="auth.language==='ar'" fill="clear" color="light" (click)="changeLang('en')">
+        English
+      </ion-button>
+
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-grid radio-group [(ngModel)]="todo.type" (ionChange)="onChangeType()">
+<ion-content class="ion-padding">
+  <ion-radio-group (ngModelChange)="onChangeType($event)" [(ngModel)]="todo.type" name="type">
+    <ion-radio value="individual" style="margin: 0 10px;">{{ 'register.individual' | translate }}</ion-radio>
+    <ion-radio value="organisation">{{ 'register.organisation' | translate }}</ion-radio>
+  </ion-radio-group>
+    <!-- <ion-grid radio-group>
         <ion-row>
             <ion-col>
-                <ion-label style="display: inline-block;margin:0;">{{ 'register.individual' | translate }}</ion-label>
-                <ion-radio value="individual"></ion-radio>
+                <ion-label style="display: inline-block;margin:0;"></ion-label>
+                <ion-radio []="todo.type" (ngModelChange)="onChangeType()" name="type" value="individual"></ion-radio>
                 <ion-label style="display: inline-block;margin:0;margin-left:20px">{{ 'register.organisation' | translate }}</ion-label>
-                <ion-radio value="organisation"></ion-radio>
+                <ion-radio [(ngModel)]="todo.type" (ngModelChange)="onChangeType()" name="type" value="organisation"></ion-radio>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid> -->
     <form #registerForm="ngForm" (ngSubmit)="logForm(registerForm)">
         <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.trade_license_number' | translate }}</ion-label>
@@ -28,7 +40,13 @@
         </ion-item>
         <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.trade_licence_exp_date' | translate }}</ion-label>
-            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="todo.licenseexp" name="licenseexp"></ion-datetime>
+            <ion-datetime-button datetime="licenseexp"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime [preferWheel]="true" displayFormat="MMM DD YYYY" presentation="date" id="licenseexp" [(ngModel)]="todo.licenseexp" name="licenseexp"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+
         </ion-item>
         <ion-item *ngIf="type=== 'o'">
             <ion-label>{{ 'register.tax_registration_number' | translate }}</ion-label>
@@ -36,7 +54,7 @@
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.fullname' | translate }}</ion-label>
-            <ion-input type="text" [(ngModel)]="todo.fullname" name="name"></ion-input>
+            <ion-input type="text" [(ngModel)]="todo.fullname" name="fullname"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.username' | translate }}</ion-label>
@@ -52,7 +70,14 @@
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.dob' | translate }}</ion-label>
-            <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="todo.dob" name="dob"></ion-datetime>
+            <ion-datetime-button datetime="dob"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime [preferWheel]="true" displayFormat="MMM DD YYYY" presentation="date" [(ngModel)]="todo.dob" name="dob" id="dob"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+
+
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.address' | translate }}</ion-label>
@@ -72,7 +97,7 @@
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.country' | translate }}</ion-label>
-            <ion-select [(ngModel)]="todo.country" name="country">
+            <ion-select ngDefaultControl  [(ngModel)]="todo.country" name="country">
                 <ion-option *ngFor="let c of countries" [value]="c.value">{{ c.name }}</ion-option>
             </ion-select>
         </ion-item>
@@ -82,11 +107,11 @@
         </ion-item>
         <ion-item>
             <ion-label>{{ 'register.timezone' | translate }}</ion-label>
-            <ion-select [(ngModel)]="todo.timezone" name="timezone">
+            <ion-select ngDefaultControl  [(ngModel)]="todo.timezone" name="timezone">
                 <ion-option *ngFor="let c of timezones" [value]="c.value">{{ c.name }}</ion-option>
             </ion-select>
         </ion-item>
-        <button ion-button type="submit" block>{{ 'register.register' | translate }}</button>
+        <ion-button  type="submit" expand="full">{{ 'register.register' | translate }}</ion-button>
     </form>
 
 </ion-content>

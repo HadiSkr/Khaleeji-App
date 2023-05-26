@@ -1,3 +1,7 @@
+//TODO: https://github.com/bougarfaoui/ngx-socket-io/issues/57
+
+
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { BatchPage } from 'src/pages/batch/batch';
@@ -14,45 +18,44 @@ import { StaticPage } from 'src/pages/static/static';
 
 const routes: Routes = [
   {
-    path: '/', component: HomePage
+    path: 'batch', component: BatchPage
   },
   {
-    path: '/batch', component: BatchPage
+    path: 'current', component: CurrentPage
   },
   {
-    path: '/current', component: CurrentPage
+    path: 'dash', component: DashPage
   },
   {
-    path: '/dash', component: DashPage
+    path: 'details', component: DetailsPage
   },
   {
-    path: '/details', component: DetailsPage
+    path: 'hybrid', component: HybridPage
   },
   {
-    path: '/hybrid', component: HybridPage
+    path: 'list', component: ListPage
   },
   {
-    path: '/list', component: ListPage
+    path: 'login', component: LoginPage
   },
   {
-    path: '/login', component: LoginPage
+    path: 'profile', component: ProfilePage
   },
   {
-    path: '/profile', component: ProfilePage
+    path: 'register', component: RegisterPage
   },
   {
-    path: '/register', component: RegisterPage
+    path: 'static', component: StaticPage
   },
   {
-    path: '/static', component: StaticPage
-  },
-
+    path: '', component: HomePage, pathMatch: 'full'
+  }
 
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })

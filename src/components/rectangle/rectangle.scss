@@ -20,11 +20,11 @@ rectangle {
         }
         .second
         {
-          color: color($colors,danger);
+          color: var(--ion-color-danger);
         }
         .remaining
         {
-          font-size:smaller; 
+          font-size:smaller;
           padding-left: 0;
         }
         .grid
@@ -45,6 +45,6 @@ rectangle {
       }
         .bids
         {
-          font-size:smaller; 
+          font-size:smaller;
         }
 }

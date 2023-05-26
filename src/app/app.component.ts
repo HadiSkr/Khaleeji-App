@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MenuController, NavController, Platform, ToastController } from '@ionic/angular';
 import { Network } from '@capacitor/network';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { GlobalEventsService } from '../providers/observables/observable';
 import { DOCUMENT } from '@angular/common';
 import { register } from 'swiper/element/bundle';
 import { LoginPage } from 'src/pages/login/login';
+import { CurrentPage } from 'src/pages/current/current';
 
 register();
 @Component({
@@ -27,7 +28,8 @@ export class AppComponent {
   param: any;
   side: any;
 
-  pages: Array<{ title: string, component: any, page: string }>;
+  pages: Array<{ link: string; title: string, component: any, page: string }>;
+  // @ViewChild('content') nav: Nav
 
   constructor(
     @Inject(DOCUMENT) private doc,
@@ -44,42 +46,43 @@ export class AppComponent {
     this.userName = this.auth.userName;
     this.param = { value: this.userName }
     this.pages = [
-      { title: '', component: HomePage, page: "home" },
-      { title: '', component: StaticPage, page: "about" },
-      { title: '', component: StaticPage, page: "terms" },
-      { title: '', component: StaticPage, page: "privacy" },
-      { title: '', component: StaticPage, page: "disclaimer" },
-      { title: '', component: StaticPage, page: "faq" },
-      { title: '', component: StaticPage, page: "contact" }
+      { link: '', title: '', component: HomePage, page: "home" },
+      { link: 'static', title: '', component: StaticPage, page: "about" },
+      { link: 'static', title: '', component: StaticPage, page: "terms" },
+      { link: 'static', title: '', component: StaticPage, page: "privacy" },
+      { link: 'static', title: '', component: StaticPage, page: "disclaimer" },
+      { link: 'static', title: '', component: StaticPage, page: "faq" },
+      { link: 'static', title: '', component: StaticPage, page: "contact" }
     ];
     this.applyLanMenu();
     const _this = this;
     globalEventsService.getObservable().subscribe({
       next(position) {
+        console.log(position);
         switch (position) {
           case 'user:loggedin':
             _this.pages = [
-              { title: '', component: HomePage, page: "home" },
-              { title: '', component: DashPage, page: "dashboard" },
-              { title: '', component: ProfilePage, page: "profile" },
-              { title: '', component: StaticPage, page: "about" },
-              { title: '', component: StaticPage, page: "terms" },
-              { title: '', component: StaticPage, page: "privacy" },
-              { title: '', component: StaticPage, page: "disclaimer" },
-              { title: '', component: StaticPage, page: "faq" },
-              { title: '', component: StaticPage, page: "contact" },
-              { title: '', component: "logout", page: "logout" }
+              { link : 'home', title: '', component: HomePage, page: "home" },
+              { link : 'dashboard', title: '', component: DashPage, page: "dashboard" },
+              { link : 'profile', title: '', component: ProfilePage, page: "profile" },
+              { link : 'static', title: '', component: StaticPage, page: "about" },
+              { link : 'static', title: '', component: StaticPage, page: "terms" },
+              { link : 'static', title: '', component: StaticPage, page: "privacy" },
+              { link : 'static', title: '', component: StaticPage, page: "disclaimer" },
+              { link : 'static', title: '', component: StaticPage, page: "faq" },
+              { link : 'static', title: '', component: StaticPage, page: "contact" },
+              { link : '', title: '', component: "logout", page: "logout" }
             ];
             break;
           case 'user:loggedout':
             _this.pages = [
-              { title: '', component: HomePage, page: "home" },
-              { title: '', component: StaticPage, page: "about" },
-              { title: '', component: StaticPage, page: "terms" },
-              { title: '', component: StaticPage, page: "privacy" },
-              { title: '', component: StaticPage, page: "disclaimer" },
-              { title: '', component: StaticPage, page: "faq" },
-              { title: '', component: LoginPage, page: "contact" }
+              { link: '', title: '', component: HomePage, page: "home" },
+              { link: 'static', title: '', component: StaticPage, page: "about" },
+              { link: 'static', title: '', component: StaticPage, page: "terms" },
+              { link: 'static', title: '', component: StaticPage, page: "privacy" },
+              { link: 'static', title: '', component: StaticPage, page: "disclaimer" },
+              { link: 'static', title: '', component: StaticPage, page: "faq" },
+              { link: 'static', title: '', component: LoginPage, page: "contact" }
             ];
             break;
           case 'user:profileupdated':
@@ -105,7 +108,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      StatusBar.setBackgroundColor({ color: '#005495' });
+      // StatusBar.setBackgroundColor({ color: '#005495' });
       SplashScreen.hide();
       // watch network for a disconnection
 
@@ -148,6 +151,7 @@ export class AppComponent {
     this.translate.get('menus.logout').subscribe(value => { this.pages.map(item => { if (item.page == 'logout') { item.title = value } }) })
   }
   openPage(page) {
+
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     if (page.component == "logout") {
@@ -155,9 +159,11 @@ export class AppComponent {
       this.globalEventsService.publish('user:loggedout');
       this.globalEventsService.publish('user:profileupdated');
       localStorage.clear();
-      this.navCtrl.navigateRoot('/');
+      this.menuCtrl.close();
+      this.navCtrl.navigateRoot('');
     }
     else if (page.page != null) {
+      this.menuCtrl.close();
       this.navCtrl.navigateForward(page.link, {
         state: {
           page: page.page
@@ -165,11 +171,16 @@ export class AppComponent {
       });
     }
     else {
+      this.menuCtrl.close();
       this.navCtrl.navigateForward(page.link);
     }
   }
   openLoginPage() {
-    this.navCtrl.navigateRoot('/login');
+    this.navCtrl.navigateRoot('login');
     this.menuCtrl.close();
+  }
+  changeLang(lang) {
+    this.auth.language = lang;
+    this.globalEventsService.publish('app:languagechanged');
   }
 }

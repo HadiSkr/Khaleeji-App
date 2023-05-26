@@ -5,34 +5,35 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="#"></ion-back-button>
     <ion-title>{{ "" }}</ion-title>
-    <ion-buttons end>
-      <button *ngIf="auth.language=== 'en'" ion-button (click)="changeLang('ar')">
+    <ion-buttons class="ion-float-end">
+      <ion-button *ngIf="auth.language=== 'en'" (click)="changeLang('ar')">
         العربية
-      </button>
-      <button *ngIf="auth.language=== 'ar'" ion-button (click)="changeLang('en')">
+      </ion-button>
+      <ion-button *ngIf="auth.language=== 'ar'" (click)="changeLang('en')">
         English
-      </button>
-      <button (click)="gotoHome()" ion-button icon-only>
+      </ion-button>
+      <ion-button (click)="gotoHome()" icon-only>
         <ion-icon  name="home"></ion-icon>
-      </button>
-      <button ion-button (click)="presentPopover($event)"><ion-icon name="search"></ion-icon></button>
-      <button *ngIf="auth.userId!==-1" ion-button (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></button>
+      </ion-button>
+      <ion-button (click)="presentPopover($event)"><ion-icon name="search"></ion-icon></ion-button>
+      <ion-button *ngIf="auth.userId!==-1" (click)="gotoProfile()"><ion-icon  name="person"></ion-icon></ion-button>
     </ion-buttons>
-  </ion-navbar>
-  <ion-toolbar vanish-scroll [vanish-scroll]="scrollArea" (parentFun)="contentResize()">
-      <!-- <button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" ion-button [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></button> -->
+  </ion-toolbar>
+  <ion-toolbar class="lightPink" vanish-scroll [vanish-scroll]="scrollArea" (parentFun)="contentResize()">
+      <!-- <ion-button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></ion-button> -->
       <ion-col>
-      <button color="primary"  *ngIf="enddates.length>0" ion-button (click)="presentEndPopover($event)">
+      <ion-button color="primary"  *ngIf="enddates.length>0" (click)="presentEndPopover($event)">
         {{end()[0].enddate}}
         <ion-badge  color="danger" style="margin-left:5px;" item-end>{{end()[0].totitems}}</ion-badge>
-      </button>
+      </ion-button>
     </ion-col>
-    <button ion-button color="dark" (click)="changeInsta()" clear>Instagram</button>
-      <button color="dark" ion-button icon-only outline float-right  (click)="changeView()">
+    <ion-button color="dark" (click)="changeInsta()" fill="clear">Instagram</ion-button>
+      <ion-button color="dark" fill="outline" class="ion-float-end" (click)="changeView()">
         <ion-icon [name]="(view=== 'grid')?'list':'grid'"></ion-icon>
-      </button>
+      </ion-button>
   </ion-toolbar>
 </ion-header>
 <ion-content #scrollArea scrollEvents="true" (ionScroll)="logScrolling($event)">
@@ -45,7 +46,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar vanish-scroll-footer [vanish-scroll-footer]="scrollArea" (footerFun)="contentResize()">
-    <!-- <button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" ion-button [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></button> -->
+    <!-- <ion-button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></ion-button> -->
     <ion-row>
       <ion-col (click)="goto('mybids')" text-center>
         <ion-icon name="hammer"></ion-icon>

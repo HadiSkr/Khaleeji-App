@@ -1,47 +1,52 @@
-<ion-menu *ngIf="auth.language==='en'"  type="overlay" persistent="true" side="left">
+<ion-menu contentId="mainContent" [content]="content" *ngIf="auth.language==='en'" type="overlay" persistent="true" side="start">
   <ion-header>
     <ion-toolbar>
       <ion-title color="light">{{ 'menus.menu' | translate }}</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-content>
     <ion-toolbar>
-      <ion-title>{{ 'menus.hi' |  translate:param }} </ion-title>
-      <ion-buttons *ngIf="userName==='Guest'" end>
-        <button (click)="openLoginPage()" ion-button color="light" outline item-end>{{ 'menus.login' | translate }}</button>
+      <ion-title>{{ 'menus.hi' | translate:param }} </ion-title>
+      <ion-buttons *ngIf="userName==='Guest'">
+        <ion-button (click)="openLoginPage()" color="light" fill="outline" item-start>{{ 'menus.login' | translate
+          }}</ion-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-list>
-      <button menuClose class="menu" ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <ion-item menuClose class="menu" *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
-      </button>
+      </ion-item>
     </ion-list>
   </ion-content>
-
 </ion-menu>
-<ion-menu *ngIf="auth.language==='ar'"  type="overlay" persistent="true"  side="right">
+
+<ion-menu contentId="mainContent" [content]="content" *ngIf="auth.language==='ar'" type="overlay" persistent="true" side="end">
   <ion-header>
     <ion-toolbar>
       <ion-title color="light">{{ 'menus.menu' | translate }}</ion-title>
     </ion-toolbar>
   </ion-header>
-
   <ion-content>
     <ion-toolbar>
-      <ion-title>{{ 'menus.hi' |  translate:param }} </ion-title>
+      <ion-title>{{ 'menus.hi' | translate:param }} </ion-title>
       <ion-buttons *ngIf="userName==='Guest'" end>
-        <button (click)="openLoginPage()" ion-button color="light" outline item-end>{{ 'menus.login' | translate }}</button>
+        <ion-button (click)="openLoginPage()"  color="light" fill="outline" item-end>{{ 'menus.login' | translate
+          }}</ion-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-list>
-      <button menuClose class="menu" ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <ion-item menuClose class="menu" *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
-      </button>
+      </ion-item>
     </ion-list>
   </ion-content>
 
 </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+<ion-nav [rootPage]="rootPage" #content swipeBackEnabled="false">
+  <div id="mainContent">
+  </div>
+</ion-nav>
+
+<ion-router-outlet overflow-scroll="true"></ion-router-outlet>

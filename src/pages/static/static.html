@@ -6,16 +6,17 @@
 -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons end>
-      <button *ngIf="auth.language==='en'" ion-button clear color="light" (click)="changeLang('ar')">
+    <ion-buttons>
+      <ion-back-button slot="start" defaultHref="#"></ion-back-button>
+      <ion-button slot="end" *ngIf="auth.language==='en'"  clear color="light" (click)="changeLang('ar')">
         العربية
-      </button>
-      <button *ngIf="auth.language==='ar'" ion-button clear color="light" (click)="changeLang('en')">
+      </ion-button>
+      <ion-button slot="end" *ngIf="auth.language==='ar'" clear color="light" (click)="changeLang('en')">
         English
-      </button>
-      <button (click)="gotoHome()" ion-button icon-only clear color="light">
+      </ion-button>
+      <ion-button slot="end" (click)="gotoHome()"  icon-only clear color="light">
         <ion-icon name="home"></ion-icon>
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

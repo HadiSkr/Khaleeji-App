@@ -35,7 +35,7 @@ export class BoxComponent {
       this.shareInstagram(id);
     }
     else{
-      this.navCtrl.navigateForward('/details',{
+      this.navCtrl.navigateForward('details',{
           state:{id:id}
         });
     }
@@ -44,7 +44,7 @@ export class BoxComponent {
   {
     this.flag=false;
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
       let data=
@@ -82,11 +82,11 @@ export class BoxComponent {
     {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.navigateForward('/login');
+            this.navCtrl.navigateForward('login');
             return false;
         }
         let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();
         let json = {"userId" : this.auth.userId,"bidamount" : 500,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};
@@ -106,11 +106,11 @@ export class BoxComponent {
     favorite(auc) {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.navigateForward('/login');
+            this.navCtrl.navigateForward('login');
             return false;
         }
         /*let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
 
         loading.present();*/
@@ -133,7 +133,7 @@ export class BoxComponent {
     }
     async showAutoBidPrompt(auc) {
         if (this.auth.userId == -1) {
-            this.navCtrl.navigateForward('/login',
+            this.navCtrl.navigateForward('login',
                 {
                     state:{prev: true}
                 });
@@ -173,7 +173,7 @@ export class BoxComponent {
     autoBid(amount,auc) {
 
         /*let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();*/
         this.presentToast('Auto Bid has been activated');
@@ -216,7 +216,7 @@ export class BoxComponent {
     autoBidCancel() {
 
         /*let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();*/
         this.presentToast('Auto Bid was cancelled');
@@ -238,7 +238,7 @@ export class BoxComponent {
     {
         if(this.auth.userId==-1)
         {
-            this.navCtrl.navigateForward('/login');
+            this.navCtrl.navigateForward('login');
             return false;
         }
         let currentprice= parseInt(this.auction.current_bid.replace(/,/g, ''));
@@ -258,7 +258,7 @@ export class BoxComponent {
             return false;
         }
         let loading = await this.loadingCtrl.create({
-            message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
         });
         loading.present();
         let json = {"userId" : this.auth.userId,"bidamount" : this.price-currentprice,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};

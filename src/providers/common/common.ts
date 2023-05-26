@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 
 import * as CryptoJS from 'crypto-js';
-import { Device } from '@awesome-cordova-plugins/device/ngx';
+
 
 import { AuthenticationProvider } from '../authentication/authentication';
+import { Injectable } from '@angular/core';
+import { Device } from '@capacitor/device';
 
 
 /*
@@ -12,10 +14,15 @@ import { AuthenticationProvider } from '../authentication/authentication';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-
+@Injectable({providedIn: 'root'})
 export class CommonProvider {
   page=0;
-  constructor(public http: HttpClient, private device: Device,public auth:AuthenticationProvider) {
+  deviceId: string = "";
+  constructor(public http: HttpClient,public auth:AuthenticationProvider) {
+    const self = this;
+    Device.getId().then(res => {
+      self.deviceId = res.identifier;
+    })
   }
 
   auctions()
@@ -51,11 +58,12 @@ export class CommonProvider {
   }
   getStatic(data)
   {
+    console.log(data);
     return this.http.post('https://khaleejauction.com/newdesign/api/staticpages.php',data);
   }
   dashboard(data)
   {
-    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
+    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.userId=CryptoJS.AES.encrypt(JSON.stringify(data.userId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.token=this.auth.token;
     return this.http.post('https://khaleejauction.com/newdesign/api/dashboard.php',data);
@@ -66,21 +74,21 @@ export class CommonProvider {
   }
   bid(data)
   {
-    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
+    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.userId=CryptoJS.AES.encrypt(JSON.stringify(data.userId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.token=this.auth.token;
     return this.http.post('https://khaleejauction.com/newdesign/api/bid.php',data);
   }
   autoBid(data)
   {
-    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
+    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.userId=CryptoJS.AES.encrypt(JSON.stringify(data.userId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.token=this.auth.token;
     return this.http.post('https://khaleejauction.com/newdesign/api/autobid.php',data);
   }
   autoBidCancel(data)
   {
-    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
+    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.userId=CryptoJS.AES.encrypt(JSON.stringify(data.userId), this.auth.secretKey, {format: this.auth.CryptoJSAesJson}).toString();
     data.token=this.auth.token;
     return this.http.post('https://khaleejauction.com/newdesign/api/autobid_cancel.php',data);

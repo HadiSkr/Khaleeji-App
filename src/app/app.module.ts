@@ -19,10 +19,25 @@ import { DetailsPage } from 'src/pages/details/details';
 import { ProfilePage } from 'src/pages/profile/profile';
 import { RegisterPage } from 'src/pages/register/register';
 import { PipesModule } from "../pipes/pipes.module";
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from 'src/components/components.module';
 import { CommonModule } from '@angular/common';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonProvider } from 'src/providers/common/common';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { BasePage } from 'src/pages/base/base.component';
+import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+
+
+const config: SocketIoConfig = { url: 'wss://khaleejauction.com:2053', options: {} };
+
+function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 
 @NgModule({
     schemas: [
@@ -40,10 +55,17 @@ import { CommonModule } from '@angular/common';
         BatchPage,
         DetailsPage,
         ProfilePage,
-        RegisterPage
+        RegisterPage,
+      BasePage
     ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AuthenticationProvider, CommonProvider, SocialSharing],
     bootstrap: [AppComponent],
-    imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule, TranslateModule, FormsModule, ComponentsModule, CommonModule]
+    imports: [SocketIoModule.forRoot(config), HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule, TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+  }),FormsModule, ComponentsModule, CommonModule]
 })
 export class AppModule { }

@@ -23,6 +23,22 @@
   </form>
   <button ion-button color="primary" block (click)="submit(loginForm)" [disabled]="!loginForm.valid">Log in</button>
  -->
+ <ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button slot="start" defaultHref="#"></ion-back-button>
+      <ion-button slot="end" *ngIf="auth.language==='en'"  clear color="light" (click)="changeLang('ar')">
+        العربية
+      </ion-button>
+      <ion-button slot="end" *ngIf="auth.language==='ar'" clear color="light" (click)="changeLang('en')">
+        English
+      </ion-button>
+      <!-- <ion-button slot="end" (click)="gotoHome()"  icon-only clear color="light">
+        <ion-icon name="home"></ion-icon>
+      </ion-button> -->
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
   <div class="login-page">
     <img src="assets/imgs/logo.png"/>

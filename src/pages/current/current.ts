@@ -1,17 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, PopoverController, LoadingController, IonContent, Platform } from '@ionic/angular';
+import { NavController, PopoverController, LoadingController, IonContent, Platform } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { HomePage } from '../home/home';
 import { FilterComponent } from '../../components/filter/filter';
 import { DropdownComponent } from '../../components/dropdown/dropdown';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { Subject, Subscription } from 'rxjs';
 import { ProfilePage } from '../profile/profile';
 import { LoginPage } from '../../pages/login/login';
 import { DashPage } from '../../pages/dash/dash';
 import { HybridPage } from '../../pages/hybrid/hybrid';
 import { GlobalEventsService } from '../../providers/observables/observable';
+import { Router } from '@angular/router';
 
 /**
  * Generated class for the CurrentPage page.
@@ -23,6 +24,7 @@ import { GlobalEventsService } from '../../providers/observables/observable';
 @Component({
   selector: 'page-current',
   templateUrl: 'current.html',
+  styleUrls: ['./current.scss']
 })
 export class CurrentPage {
   @ViewChild(IonContent) content: IonContent;
@@ -35,7 +37,8 @@ export class CurrentPage {
   instagram: any = false;
   resumeListener:Subscription=new Subscription();
   data: any = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
-  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public navParams: NavParams, public common: CommonProvider, public socket: Socket, public platform: Platform) {
+  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public router: Router, public common: CommonProvider, public socket: Socket, public platform: Platform) {
+    let navParams = router.getCurrentNavigation()?.extras.state;
     /* foreground and background toggle functions */
     if (this.platform.is('cordova')) {
 
@@ -50,8 +53,8 @@ export class CurrentPage {
         this.getEndDates();
       });
     }
-    this.data.itemType = this.navParams.get('item').id;
-    this.totalauctions = this.navParams.get('item').count;
+    this.data.itemType = navParams?.['item']?.id;
+    this.totalauctions = navParams?.['item']?.count;
     this.getAuctions();
     this.getEndDates();
     this.getUpdates().subscribe((message:any) => {
@@ -145,26 +148,26 @@ export class CurrentPage {
   }
   goto(page) {
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
           state:{prev: true}
         });
       return false;
     }
-    this.navCtrl.navigateForward('/dash', {state: { tab: page }});
+    this.navCtrl.navigateForward('dash', {state: { tab: page }});
 
   }
   gotoHybrid() {
-    this.navCtrl.navigateForward('/hybrid');
+    this.navCtrl.navigateForward('hybrid');
   }
   gotoProfile() {
-    this.navCtrl.navigateForward('/profile');
+    this.navCtrl.navigateForward('profile');
   }
   async getAuctions() {
     this.newauctions = [];
 
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     if(this.auctions.length == 0)
     {
@@ -198,7 +201,7 @@ export class CurrentPage {
     this.newauctions = [];
     this.data = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     this.data = {
@@ -302,7 +305,7 @@ export class CurrentPage {
       });
   }
   gotoHome() {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('');
   }
   changeLang(lang) {
     this.auth.language = lang;

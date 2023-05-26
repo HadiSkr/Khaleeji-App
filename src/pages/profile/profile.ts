@@ -59,6 +59,6 @@ export class ProfilePage {
   }
   gotoHome()
   {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('');
   }
 }

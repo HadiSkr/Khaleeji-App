@@ -4,7 +4,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { NavController } from '@ionic/angular';
 import { DetailsPage } from '../../pages/details/details';
 import { Observable } from 'rxjs';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 
 /**
  * Generated class for the ExpandableComponent component.
@@ -259,7 +259,7 @@ export class ExpandableComponent  implements AfterViewInit {
   }
   gotoAuction(id)
   {
-    this.navCtrl.navigateForward('/details',{
+    this.navCtrl.navigateForward('details',{
       state:{id:id}
       });
   }

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { HomePage } from '../home/home';
 import * as _ from 'lodash';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { Subscription } from 'rxjs';
 import { GlobalEventsService } from '../../providers/observables/observable';
 import { Swiper } from 'swiper/types';
@@ -102,14 +102,14 @@ export class HybridPage {
   }
   async bid(id) {
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
           state:{prev: true}
         });
       return false;
     }
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     let ress = this.hybrid.credentials();
     let json = {
@@ -126,7 +126,7 @@ export class HybridPage {
   }
   async custombid(id) {
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
           state:{prev: true}
         });
@@ -146,7 +146,7 @@ export class HybridPage {
       return false;
     }
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     let ress = this.hybrid.credentials();
     let json = {
@@ -170,7 +170,7 @@ export class HybridPage {
     toast.present();
   }
   gotoHome() {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('');
   }
   changeLang(lang) {
     this.auth.language = lang;

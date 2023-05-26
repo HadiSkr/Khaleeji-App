@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import * as CryptoJS from 'crypto-js';
-import { Device } from '@awesome-cordova-plugins/device/ngx';
+import { Device } from '@capacitor/device';
 import { GlobalEventsService } from '../observables/observable';
+import { Injectable } from '@angular/core';
 
 /*
   Generated class for the AuthenticationProvider provider.
@@ -9,20 +10,26 @@ import { GlobalEventsService } from '../observables/observable';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
-
+@Injectable({providedIn: 'root'})
 export class AuthenticationProvider {
   userId:number=-1;
   userName:any="Guest";
   language:string="en";
   secretKey:string="";
   bidlimit:number=0;
+  deviceId: string = "";
   token:any;
   bidamount:any;
   waitingtime:any;
   hybridtime:any;
   convertionrate:any;
   CryptoJSAesJson;
-  constructor(public http: HttpClient,private device: Device, private globalEventsService: GlobalEventsService) {
+  constructor(public http: HttpClient, private globalEventsService: GlobalEventsService) {
+
+    const self = this;
+    Device.getId().then(res => {
+      self.deviceId = res.identifier;
+    })
     this.CryptoJSAesJson= {
         stringify: function (cipherParams) {
             let j;
@@ -58,7 +65,7 @@ export class AuthenticationProvider {
   {
     data.username=CryptoJS.AES.encrypt(JSON.stringify(data.username), this.secretKey, {format: this.CryptoJSAesJson}).toString();
     data.password=CryptoJS.AES.encrypt(JSON.stringify(data.password), this.secretKey, {format: this.CryptoJSAesJson}).toString();
-    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.device.uuid), this.secretKey, {format: this.CryptoJSAesJson}).toString();
+    data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.secretKey, {format: this.CryptoJSAesJson}).toString();
     return this.http.post('https://khaleejauction.com/newdesign/api/user_login.php', data);
   }
   setUser(userId){

@@ -1,18 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController, AlertController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HttpClient } from '@angular/common/http';
-import { HomePage } from '../home/home';
-import { LoginPage } from '../../pages/login/login';
-import { HybridPage } from '../hybrid/hybrid';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { GlobalEventsService } from '../../providers/observables/observable';
+import { Router } from '@angular/router';
 
 
 /**
@@ -36,8 +34,8 @@ export class DetailsPage {
   hybridclosed: any = false;
   description: any = '';
   supendPriceUpdate: any = false;
-  constructor(public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public navParams: NavParams, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
-    this.id = this.navParams.get('id');
+  constructor(public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public router: Router, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
+    this.id = this.router.getCurrentNavigation()?.extras.state?.['id'];
     this.getDetails(this.id);
     this.getUpdates().subscribe(message => {
       let data = message.view;
@@ -78,7 +76,7 @@ export class DetailsPage {
     if (this.auction.ends <= 0) {
       if (this.hybridclosed == false) {
         //got ot hybrid page
-        this.navCtrl.navigateForward('/hybrid');
+        this.navCtrl.navigateForward('hybrid', {replaceUrl: true});
         return true;
       }
       else {
@@ -94,9 +92,10 @@ export class DetailsPage {
   favorite() {
     let json;
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
-          state:{prev: true}
+          state:{prev: true},
+          replaceUrl: true
         });
       return false;
     }
@@ -118,7 +117,7 @@ export class DetailsPage {
   }
   async getDetails(id) {
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     this.common.carDetails(id, this.auth.userId).subscribe(
@@ -177,7 +176,7 @@ export class DetailsPage {
     this.link = this.sanitizer.bypassSecurityTrustResourceUrl('https://maps.google.com/maps?q=' + details.latitude + ', ' + details.longitude + '&z=15&output=embed');
   }
   gotoHome() {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('');
   }
   nextSlide() {
     this.slides.nativeElement.slideNext();
@@ -188,9 +187,10 @@ export class DetailsPage {
   bid() {
     let json;
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
-          state:{prev: true}
+          state:{prev: true},
+          replaceUrl: true
         });
       return false;
     }
@@ -223,9 +223,10 @@ export class DetailsPage {
   }
   custombid() {
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
-          state:{prev: true}
+          state:{prev: true},
+          replaceUrl: true
         });
       return false;
     }
@@ -295,9 +296,10 @@ export class DetailsPage {
   }
   async showAutoBidPrompt() {
     if (this.auth.userId == -1) {
-      this.navCtrl.navigateForward('/login',
+      this.navCtrl.navigateForward('login',
         {
-          state:{prev: true}
+          state:{prev: true},
+          replaceUrl: true
         });
       return false;
     }
@@ -331,7 +333,7 @@ export class DetailsPage {
   async autoBid(amount) {
 
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     let json = { "maxBid": amount, "userId": this.auth.userId, "id": this.id.toString() };
@@ -373,7 +375,7 @@ export class DetailsPage {
   async autoBidCancel() {
 
     let loading = await this.loadingCtrl.create({
-      message: '<div class="custom-spinner-container"><div class="custom-spinner-box"></div></div>'
+
     });
     loading.present();
     let json = { "userId": this.auth.userId, "id": this.id.toString() };

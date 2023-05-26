@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
@@ -7,7 +7,9 @@ import { GlobalEventsService } from '../../providers/observables/observable';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  styleUrls: ['home.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HomePage {
 
@@ -53,13 +55,14 @@ export class HomePage {
   }
   current(item)
   {
-    this.navCtrl.navigateForward('/current',{
-      state:{item:item}
+    this.navCtrl.navigateForward('current',{
+      state:{item:item},
+      replaceUrl: true,
       });
   }
   hybridpage()
   {
-    this.navCtrl.navigateForward('/hybrid');
+    this.navCtrl.navigateForward('hybrid',{replaceUrl: true});
   }
   changeLang(lang)
   {
@@ -68,14 +71,14 @@ export class HomePage {
   }
   gotoProfile()
   {
-    this.navCtrl.navigateForward('/profile');
+    this.navCtrl.navigateForward('profile',{replaceUrl: true});
   }
   login()
   {
-    this.navCtrl.navigateForward('/login');
+    this.navCtrl.navigateForward('login',{replaceUrl: true});
   }
   register()
   {
-    this.navCtrl.navigateForward('/register');
+    this.navCtrl.navigateForward('register',{replaceUrl: true});
   }
 }

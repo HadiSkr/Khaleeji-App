@@ -6,10 +6,8 @@ page-current {
     {
         margin-top: 0px;
     }
-    ion-header ion-toolbar .toolbar-background {
-        background-color: #efe3e3;
-      }
-      ion-footer ion-toolbar .toolbar-content {
-        //color:white;
-      }
+
+    ion-header ion-toolbar.lightPink {
+      --background: #efe3e3;
+    }
 }
