@@ -1,4 +1,7 @@
 {
+  "general": {
+    "back": "Back"
+  },
     "home": {
         "register_with_khaleej": "Register with Khaleej",
         "register_with_khaleej_notes": "Register with khaleej to be able to bid on a wide range of used cars.",

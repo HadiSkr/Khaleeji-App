@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { MenuController, NavController, NavParams } from '@ionic/angular';
 import { HomePage } from '../home/home';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { TranslateService } from '@ngx-translate/core';
 import { GlobalEventsService } from '../../providers/observables/observable';
+import { Router } from '@angular/router';
 
 
 /**
@@ -19,8 +20,8 @@ import { GlobalEventsService } from '../../providers/observables/observable';
 })
 export class DashPage {
   items: any = [];
-  constructor(public globalEventsService: GlobalEventsService,public translate: TranslateService,public navCtrl: NavController, public navParams: NavParams, public auth:AuthenticationProvider) {
-
+  constructor(public globalEventsService: GlobalEventsService,public translate: TranslateService, public menuCtrl: MenuController,public navCtrl: NavController, public router: Router, public auth:AuthenticationProvider) {
+    let navState = router.getCurrentNavigation()?.extras.state ?? {};
     this.items = [
       { title:'',expanded: false, tab:"mybids" },
       { title:'',expanded: false, tab:"favorite" },
@@ -29,9 +30,9 @@ export class DashPage {
       { title:'',expanded: false, tab:"invoice"  },
       { title:'',expanded: false, tab:"payment"  }
     ];
-    if(this.navParams.get('tab'))
+    if(navState['tab'])
     {
-      this.dropTab(this.navParams.get('tab'));
+      this.dropTab(navState['tab']);
     }
     this.applyLanguage();
     const _this = this;
@@ -72,6 +73,9 @@ export class DashPage {
         return listItem;
       });
     }
+  }
+  toggleMenu(){
+    this.menuCtrl.toggle();
   }
   gotoHome()
   {

@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HybridProvider } from '../../providers/hybrid/hybrid';
@@ -16,8 +16,19 @@ export class HomePage {
   items: any[];
   active: any=false;
   loggedin:any=false;
-  constructor(public globalEventsService: GlobalEventsService, public navCtrl: NavController,public auth : AuthenticationProvider,public common : CommonProvider, public hybrid: HybridProvider) {
+  constructor(public globalEventsService: GlobalEventsService, public menuCtrl: MenuController, public navCtrl: NavController,public auth : AuthenticationProvider,public common : CommonProvider, public hybrid: HybridProvider) {
     this.getItems();
+    let self = this;
+    globalEventsService.getObservable().subscribe({
+      next(position) {
+        if(position == 'user:loggedout'){
+          self.loggedin =false;
+        }
+      },
+      error(msg) {
+        console.log('Error Getting Location: ', msg);
+      }
+    });
     this.hybrid.getHybridCount().subscribe(message => {
       if(message.auction_id!=0)
       {
@@ -59,6 +70,9 @@ export class HomePage {
       state:{item:item},
       replaceUrl: true,
       });
+  }
+  toggleMenu(){
+    this.menuCtrl.toggle();
   }
   hybridpage()
   {

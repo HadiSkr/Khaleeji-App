@@ -14,7 +14,8 @@ import {LoginPage} from "../../pages/login/login";
  */
 @Component({
   selector: 'box',
-  templateUrl: 'box.html'
+  templateUrl: 'box.html',
+  styleUrls: ['./box.scss']
 })
 export class BoxComponent {
 

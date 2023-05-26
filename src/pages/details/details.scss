@@ -54,4 +54,7 @@ page-details {
         contain: unset;
         overflow: visible;
     }
+    ion-button {
+      –border-radius: 0;
+      }
 }

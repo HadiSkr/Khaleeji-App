@@ -1,3 +1,5 @@
+@import "../../assets/scss/direction.scss";
+
 box {
   ion-grid
   {
@@ -36,16 +38,16 @@ box {
       }
       .second
       {
-        color: color($colors,danger);
+        color: var(--ion-color-danger);
       }
       .remaining
       {
-        font-size:smaller; 
+        font-size:smaller;
         padding-left: 0;
       }
       .bids
       {
-        font-size:smaller; 
+        font-size:smaller;
       }
       .grid
       {
@@ -72,11 +74,11 @@ box {
       }
       .current-badge
       {
-        @include float(end);
+        float: inline-end;
       }
       .num-badge
       {
-        @include text-align(end)
+        text-align: end;
       }
       .remaining-badge
       {

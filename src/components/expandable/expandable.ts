@@ -14,10 +14,11 @@ import { Socket } from 'ngx-socket-io';
  */
 @Component({
   selector: 'expandable',
-  templateUrl: 'expandable.html'
+  templateUrl: 'expandable.html',
+  styleUrls: ['./expandable.scss']
 })
 export class ExpandableComponent  implements AfterViewInit {
-  @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
+  // @ViewChild("expandWrapper", { read: ElementRef }) expandWrapper: ElementRef;
   @Input() item:any;
   auctions: any[];
   summary: any=[];
@@ -119,7 +120,7 @@ export class ExpandableComponent  implements AfterViewInit {
     }
   }
   ngAfterViewInit() {
-    this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", "unset");
+    // this.renderer.setStyle(this.expandWrapper.nativeElement, "max-height", "unset");
   }
   getSummary()
   {

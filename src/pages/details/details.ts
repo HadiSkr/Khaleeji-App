@@ -1,5 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, LoadingController, ToastController, AlertController } from '@ionic/angular';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { NavController, LoadingController, ToastController, AlertController, IonicSlides } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HttpClient } from '@angular/common/http';
@@ -7,10 +7,10 @@ import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
-
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 import { GlobalEventsService } from '../../providers/observables/observable';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 
 /**
@@ -23,9 +23,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'page-details',
   templateUrl: 'details.html',
+  styleUrls: ['./details.scss']
 })
 export class DetailsPage {
   @ViewChild('slides') slides: ElementRef;
+
+
+
   id: any;
   price: any;
   auction: any = {};
@@ -34,7 +38,7 @@ export class DetailsPage {
   hybridclosed: any = false;
   description: any = '';
   supendPriceUpdate: any = false;
-  constructor(public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public router: Router, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
+  constructor(@Inject(DOCUMENT) public doc,public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public router: Router, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
     this.id = this.router.getCurrentNavigation()?.extras.state?.['id'];
     this.getDetails(this.id);
     this.getUpdates().subscribe(message => {
@@ -158,19 +162,19 @@ export class DetailsPage {
     })
     return observable;
   }
-  shareMe() {
+  async shareMe() {
     console.log(this.getUrl(this.auction.title,this.auction.year,this.id));
     let options = {
       message: this.auction.title,
       url: this.getUrl(this.auction.title,this.auction.year,this.id)
     };
-    this.socialSharing.shareWithOptions(options);
+    await this.socialSharing.shareWithOptions(options);
   }
   getUrl(title: any, year: any, id: any) {
     var title = title.replace(/\s+/g, '-');
     title = title.replace(".", "-");
     title = title + "-" + year;
-    return `https://khaleejauction.com/cars/` + title + `/` + id + `/`;
+    return `https://staging.khaleejauction.com/cars/` + title + `/` + id + `/`;
   }
   loadMap(details) {
     this.link = this.sanitizer.bypassSecurityTrustResourceUrl('https://maps.google.com/maps?q=' + details.latitude + ', ' + details.longitude + '&z=15&output=embed');
@@ -179,10 +183,12 @@ export class DetailsPage {
     this.navCtrl.navigateRoot('');
   }
   nextSlide() {
-    this.slides.nativeElement.slideNext();
+
+    this.slides.nativeElement.swiper.slideNext();
+
   }
   prevSlide() {
-    this.slides.nativeElement.slidePrev();
+    this.slides.nativeElement.swiper.slidePrev();
   }
   bid() {
     let json;
@@ -250,7 +256,7 @@ export class DetailsPage {
       let json;
       let bidlimit;
       json = { "action": "getBidLimit", "userId": this.auth.userId };
-      this.http.post('https://khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
+      this.http.post('https://staging.khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
         data => {
           if (data['status'] == "error") {
 

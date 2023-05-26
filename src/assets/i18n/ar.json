@@ -1,4 +1,8 @@
 {
+
+  "general": {
+    "back": "الرجوع"
+  },
     "home": {
         "register_with_khaleej": "سجل في مزاد الخليج العربي",
         "register_with_khaleej_notes": "سجل معنا في مزادات الخليج العربي للتتمكن من المزاودة.",

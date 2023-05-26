@@ -62,9 +62,9 @@ export class AppComponent {
         switch (position) {
           case 'user:loggedin':
             _this.pages = [
-              { link : 'home', title: '', component: HomePage, page: "home" },
-              { link : 'dashboard', title: '', component: DashPage, page: "dashboard" },
-              { link : 'profile', title: '', component: ProfilePage, page: "profile" },
+              { link : '', title: '', component: HomePage, page: "home" },
+              { link : 'dash', title: '', component: DashPage, page: "dashboard" },
+              // { link : 'profile', title: '', component: ProfilePage, page: "profile" },
               { link : 'static', title: '', component: StaticPage, page: "about" },
               { link : 'static', title: '', component: StaticPage, page: "terms" },
               { link : 'static', title: '', component: StaticPage, page: "privacy" },

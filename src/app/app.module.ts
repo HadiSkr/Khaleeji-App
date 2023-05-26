@@ -60,7 +60,9 @@ function HttpLoaderFactory(http: HttpClient) {
     ],
     providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AuthenticationProvider, CommonProvider, SocialSharing],
     bootstrap: [AppComponent],
-    imports: [SocketIoModule.forRoot(config), HttpClientModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule, PipesModule, TranslateModule.forRoot({
+    imports: [SocketIoModule.forRoot(config), HttpClientModule, BrowserModule, IonicModule.forRoot({
+      backButtonText: ''
+    }), AppRoutingModule, PipesModule, TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,

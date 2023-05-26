@@ -4,36 +4,35 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
-  <ion-navbar hideBackButton>
-    <button ion-button menuToggle>
+    <ion-toolbar>
+    <ion-button slot="start" (click)="toggleMenu()" fill="clear" menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-buttons end>
-      <button *ngIf="auth.language==='en'" ion-button clear color="light" (click)="changeLang('ar')">
+    </ion-button>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="auth.language=== 'en'" (click)="changeLang('ar')">
         العربية
-      </button>
-      <button *ngIf="auth.language==='ar'" ion-button clear color="light" (click)="changeLang('en')">
+      </ion-button>
+            <ion-button *ngIf="auth.language=== 'ar'" (click)="changeLang('en')">
         English
-      </button>
-      <button (click)="gotoHome()" ion-button icon-only clear color="light">
-        <ion-icon name="home"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+      </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-accordion-group>
+    <ion-card *ngFor="let item of items">
+      <ion-accordion  [value]="item.tab" >
+        <ion-item slot="header">
+          <ion-label>{{item.title | translate}}</ion-label>
+        </ion-item>
+        <ion-card-content slot="content">
+          <expandable [item]="item"></expandable>
+        </ion-card-content>
+      </ion-accordion>
+    </ion-card>
 
-  <ion-card (click)="expandItem(item)" *ngFor="let item of items">
-    <ion-card-header>
-      <!-- <ion-item>{{item.title}} <ion-icon item-end name="heart"></ion-icon> </ion-item> -->
-      {{item.title}} <ion-icon style="float:right" [name]="(item.expanded)?'arrow-down':'arrow-forward'"></ion-icon>
-    </ion-card-header>
-
-    <ion-card-content>
-      <expandable [item]="item"></expandable>
-    </ion-card-content>
-  </ion-card>
-
+  </ion-accordion-group>
 </ion-content>

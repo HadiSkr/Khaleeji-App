@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { Component, Inject } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { HomePage } from '../home/home';
 import { GlobalEventsService } from '../../providers/observables/observable';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { DOCUMENT } from '@angular/common';
 
 /**
  * Generated class for the ProfilePage page.
@@ -15,12 +18,26 @@ import { GlobalEventsService } from '../../providers/observables/observable';
 @Component({
   selector: 'page-profile',
   templateUrl: 'profile.html',
+  styleUrls: ['./profile.scss']
 })
 export class ProfilePage {
-
+  back: any='';
   profile:any={};
-  constructor(public globalEventsService: GlobalEventsService, public navCtrl: NavController, public navParams: NavParams,public common : CommonProvider, public auth:AuthenticationProvider) {
+  constructor(@Inject(DOCUMENT) public doc,public globalEventsService: GlobalEventsService, public translate: TranslateService,  public navCtrl: NavController, public router: Router,public common : CommonProvider, public auth:AuthenticationProvider) {
     this.getMydata();
+
+    let self = this;
+    this.translate.get('general.back').subscribe(value => self.back = value);
+    globalEventsService.getObservable().subscribe({
+      next(position) {
+        if(position == 'app:languagechanged'){
+          self.translate.get('general.back').subscribe(value => self.back = value);
+        }
+      },
+      error(msg) {
+        console.log('Error Getting Location: ', msg);
+      }
+    });
   }
 
   ionViewDidLoad() {

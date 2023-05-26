@@ -5,25 +5,20 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar hideBackButton>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-buttons end>
-      <button *ngIf="auth.language=== 'en'" ion-button clear color="light" (click)="changeLang('ar')">
-        العربية
-      </button>
-      <button *ngIf="auth.language=== 'ar'" ion-button clear color="light" (click)="changeLang('en')">
-        English
-      </button>
-      <button (click)="gotoHome()" ion-button icon-only clear color="light">
-        <ion-icon name="home"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-back-button [style]="doc.dir === 'rtl' ? 'transform:rotate(180deg)' : ''" slot="start" defaultHref="#"></ion-back-button>
+      <ion-buttons slot="end">
+          <ion-button *ngIf="auth.language=== 'en'" (click)="changeLang('ar')">
+      العربية
+    </ion-button>
+          <ion-button *ngIf="auth.language=== 'ar'" (click)="changeLang('en')">
+      English
+    </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="ion-padding">
     <ion-list>
 
       <ion-item>

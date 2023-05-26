@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { NavController, PopoverController, LoadingController, IonContent, Platform } from '@ionic/angular';
 import { CommonProvider } from '../../providers/common/common';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -13,6 +13,7 @@ import { DashPage } from '../../pages/dash/dash';
 import { HybridPage } from '../../pages/hybrid/hybrid';
 import { GlobalEventsService } from '../../providers/observables/observable';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 /**
  * Generated class for the CurrentPage page.
@@ -37,7 +38,7 @@ export class CurrentPage {
   instagram: any = false;
   resumeListener:Subscription=new Subscription();
   data: any = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
-  constructor(public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public router: Router, public common: CommonProvider, public socket: Socket, public platform: Platform) {
+  constructor(@Inject(DOCUMENT) public doc,public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public router: Router, public common: CommonProvider, public socket: Socket, public platform: Platform) {
     let navParams = router.getCurrentNavigation()?.extras.state;
     /* foreground and background toggle functions */
     if (this.platform.is('cordova')) {
