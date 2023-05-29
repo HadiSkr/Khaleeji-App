@@ -30,9 +30,15 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BasePage } from 'src/pages/base/base.component';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
+import { SocketService } from 'src/providers/socket/SocketService';
+import { DirectivesModule } from 'src/directives/directives.module';
 
 
-const config: SocketIoConfig = { url: 'wss://khaleejauction.com:2053', options: {} };
+const config: SocketIoConfig = {
+  url: 'https://staging.khaleejauction.com:2053', options: {
+    transports: ['websocket']
+  }
+};
 
 function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,34 +46,34 @@ function HttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-    schemas: [
-      CUSTOM_ELEMENTS_SCHEMA
-    ],
-    declarations: [
-        AppComponent,
-        HomePage,
-        StaticPage,
-        DashPage,
-        ListPage,
-        LoginPage,
-        HybridPage,
-        CurrentPage,
-        BatchPage,
-        DetailsPage,
-        ProfilePage,
-        RegisterPage,
-      BasePage
-    ],
-    providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AuthenticationProvider, CommonProvider, SocialSharing],
-    bootstrap: [AppComponent],
-    imports: [SocketIoModule.forRoot(config), HttpClientModule, BrowserModule, IonicModule.forRoot({
-      backButtonText: ''
-    }), AppRoutingModule, PipesModule, TranslateModule.forRoot({
-      loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
-      }
-  }),FormsModule, ComponentsModule, CommonModule]
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  declarations: [
+    AppComponent,
+    HomePage,
+    StaticPage,
+    DashPage,
+    ListPage,
+    LoginPage,
+    HybridPage,
+    CurrentPage,
+    BatchPage,
+    DetailsPage,
+    ProfilePage,
+    RegisterPage,
+    BasePage
+  ],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, AuthenticationProvider, CommonProvider, SocialSharing, SocketService],
+  bootstrap: [AppComponent],
+  imports: [DirectivesModule, SocketIoModule.forRoot(config), HttpClientModule, BrowserModule, IonicModule.forRoot({
+    backButtonText: ''
+  }), AppRoutingModule, PipesModule, TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: HttpLoaderFactory,
+      deps: [HttpClient]
+    }
+  }), FormsModule, ComponentsModule, CommonModule]
 })
 export class AppModule { }

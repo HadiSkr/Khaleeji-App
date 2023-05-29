@@ -48,15 +48,15 @@
   <ion-toolbar vanish-scroll-footer [vanish-scroll-footer]="scrollArea" (footerFun)="contentResize()">
     <!-- <ion-button color="dark" *ngFor="let date of enddates" (click)="filterByDate(date)" [outline]="!date.active">{{date.enddate}}<ion-badge  color="danger" style="margin-left:5px;" item-end>{{date.totitems}}</ion-badge></ion-button> -->
     <ion-row>
-      <ion-col (click)="goto('mybids')" text-center>
+      <ion-col (click)="goto('mybids')" style="text-align: center">
         <ion-icon name="hammer"></ion-icon>
         {{ 'dash.mybids' | translate }}
       </ion-col>
-      <ion-col (click)="goto('favorite')" text-center>
+      <ion-col (click)="goto('favorite')" style="text-align: center">
         <ion-icon name="heart"></ion-icon>
         {{ 'dash.favorite' | translate }}
       </ion-col>
-      <ion-col (click)="gotoHybrid()" text-center>
+      <ion-col (click)="gotoHybrid()" style="text-align: center">
         <ion-icon name="timer"></ion-icon>
         {{ 'dash.hybrid' | translate }}
       </ion-col>

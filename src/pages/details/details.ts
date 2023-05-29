@@ -1,10 +1,9 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NavController, LoadingController, ToastController, AlertController, IonicSlides } from '@ionic/angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { CommonProvider } from '../../providers/common/common';
 import { HttpClient } from '@angular/common/http';
-import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
@@ -23,7 +22,8 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'page-details',
   templateUrl: 'details.html',
-  styleUrls: ['./details.scss']
+  styleUrls: ['./details.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DetailsPage {
   @ViewChild('slides') slides: ElementRef;
@@ -38,7 +38,7 @@ export class DetailsPage {
   hybridclosed: any = false;
   description: any = '';
   supendPriceUpdate: any = false;
-  constructor(@Inject(DOCUMENT) public doc,public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public router: Router, public socket: Socket, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
+  constructor(@Inject(DOCUMENT) public doc,public globalEventsService: GlobalEventsService, public socialSharing: SocialSharing, public sanitizer: DomSanitizer, public navCtrl: NavController, public auth: AuthenticationProvider, public common: CommonProvider, public router: Router, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController, public http: HttpClient) {
     this.id = this.router.getCurrentNavigation()?.extras.state?.['id'];
     this.getDetails(this.id);
     this.getUpdates().subscribe(message => {
@@ -155,10 +155,19 @@ export class DetailsPage {
     }
   }
   getUpdates(): Observable<any> {
-    let observable = new Observable(observer => {
-      this.socket.on('updates', (data) => {
-        observer.next(JSON.parse(data));
-      });
+    let observable = new Subject();
+    const socket = new WebSocket("wss://staging.khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket")
+    socket.addEventListener('message', el => {
+      try{
+
+      }catch(err){
+      }
+      if(el.data.indexOf('42') != -1){
+        let newMessage = JSON.parse(el.data.slice(2));
+        if(newMessage[0] == "updates"){
+          observable.next(JSON.parse(newMessage[1]));
+        }
+      }
     })
     return observable;
   }
@@ -212,14 +221,69 @@ export class DetailsPage {
 
             json = { "userId": this.auth.userId, "bidamount": parseInt(this.auth.bidamount), "id": this.id.toString(), "cst": "new", "action": "bid" };
             this.common.bid(json).subscribe(
-              data => {
+              async(data) => {
                 /* removing the suspension of updating price */
                 this.supendPriceUpdate = false;
                 if (data['status'] == "success") {
                   //this.presentToast('You bid was success.');
                 }
                 else {
-                  this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+                  // this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+                    const prompt = await this.alertCtrl.create({
+                      header: 'Your security deposit has been consumed',
+            message: "To create a security deposit we are preparing your payment setup please select a price",
+            inputs: [
+              {
+                label: '5000',
+                type: 'radio',
+                value: '5000',
+              },
+              {
+                label: '10000',
+                type: 'radio',
+                value: '10000',
+              },
+              {
+                label: '15000',
+                type: 'radio',
+                value: '15000',
+              },
+              {
+                label: '25000',
+                type: 'radio',
+                value: '25000',
+              },
+              {
+                label: '50000',
+                type: 'radio',
+                value: '50000',
+              },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        //console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Submit',
+                    handler: async(data) => {
+                      let loading = await this.loadingCtrl.create({});
+                      loading.present();
+                      this.common.initPayment(data).subscribe(data => {
+                        loading.dismiss();
+                        if (data["status"] == "success") {
+                          window.location.href = data['link'];
+                        }else{
+                          //
+                        }
+                    });
+                    }
+                }
+            ]
+        });
+        prompt.present();
                 }
 
               });
@@ -272,7 +336,7 @@ export class DetailsPage {
             this.auction.current_bid = parseFloat(this.auction.current_bid.replace(/,/g, '')) + parseFloat(this.auth.bidamount)
             json = { "userId": this.auth.userId, "bidamount": this.price - currentprice, "limit": bidlimit, "id": this.id.toString(), "cst": "new", "action": "bid" };
             this.common.bid(json).subscribe(
-              data => {
+              async(data) => {
                 /* removing the suspension of updating price */
                 this.supendPriceUpdate = false;
                 if (data['status'] == "success") {
@@ -280,7 +344,62 @@ export class DetailsPage {
                   this.price = '';
                 }
                 else {
-                  this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+                  const prompt = await this.alertCtrl.create({
+                    header: 'Your security deposit has been consumed',
+            message: "To create a security deposit we are preparing your payment setup please select a price",
+            inputs: [
+              {
+                label: '5000',
+                type: 'radio',
+                value: '5000',
+              },
+              {
+                label: '10000',
+                type: 'radio',
+                value: '10000',
+              },
+              {
+                label: '15000',
+                type: 'radio',
+                value: '15000',
+              },
+              {
+                label: '25000',
+                type: 'radio',
+                value: '25000',
+              },
+              {
+                label: '50000',
+                type: 'radio',
+                value: '50000',
+              },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        //console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Submit',
+                    handler: async(data) => {
+                      let loading = await this.loadingCtrl.create({});
+                      loading.present();
+                      this.common.initPayment(data).subscribe(data => {
+                        loading.dismiss();
+                        if (data["status"] == "success") {
+                          window.location.href = data['link'];
+                        }else{
+                          //
+                        }
+                    });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+                  // this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
                 }
 
               });
@@ -344,7 +463,7 @@ export class DetailsPage {
     loading.present();
     let json = { "maxBid": amount, "userId": this.auth.userId, "id": this.id.toString() };
     this.common.autoBid(json).subscribe(
-      data => {
+      async(data) => {
         loading.dismiss();
         if (data['status'] == "success") {
           this.presentToast(data['msg']);
@@ -353,7 +472,61 @@ export class DetailsPage {
           }
         }
         else {
-          this.presentToast(data['msg']);
+          const prompt = await this.alertCtrl.create({
+            header: 'Your security deposit has been consumed',
+            message: "To create a security deposit we are preparing your payment setup please select a price",
+            inputs: [
+              {
+                label: '5000',
+                type: 'radio',
+                value: '5000',
+              },
+              {
+                label: '10000',
+                type: 'radio',
+                value: '10000',
+              },
+              {
+                label: '15000',
+                type: 'radio',
+                value: '15000',
+              },
+              {
+                label: '25000',
+                type: 'radio',
+                value: '25000',
+              },
+              {
+                label: '50000',
+                type: 'radio',
+                value: '50000',
+              },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        //console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Submit',
+                    handler: async(data) => {
+                      let loading = await this.loadingCtrl.create({});
+                      loading.present();
+                      this.common.initPayment(data).subscribe(data => {
+                        loading.dismiss();
+                        if (data["status"] == "success") {
+                          window.location.href = data['link'];
+                        }else{
+                          //
+                        }
+                    });
+                    }
+                }
+            ]
+        });
+        prompt.present();
         }
 
       });

@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component,Input, ViewEncapsulation } from '@angular/core';
 import { CommonProvider } from '../../providers/common/common';
 import { DetailsPage } from '../../pages/details/details';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
@@ -13,7 +13,8 @@ import {LoadingController, ToastController, NavController, AlertController} from
 @Component({
   selector: 'rectangle',
   templateUrl: 'rectangle.html',
-  styleUrls: ['./rectangle.scss']
+  styleUrls: ['./rectangle.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RectangleComponent {
 
@@ -39,7 +40,7 @@ export class RectangleComponent {
     loading.present();
     let json = {"userId" : this.auth.userId,"bidamount" : 500,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};
     this.common.bid(json).subscribe(
-      data => {
+      async(data) => {
         loading.dismiss();
         if(data['status']=="success")
         {
@@ -47,7 +48,62 @@ export class RectangleComponent {
           this.presentToast('You bid was success.');
         }
         else{
-          this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+          const prompt = await this.alertCtrl.create({
+            header: 'Your security deposit has been consumed',
+            message: "To create a security deposit we are preparing your payment setup please select a price",
+            inputs: [
+              {
+                label: '5000',
+                type: 'radio',
+                value: '5000',
+              },
+              {
+                label: '10000',
+                type: 'radio',
+                value: '10000',
+              },
+              {
+                label: '15000',
+                type: 'radio',
+                value: '15000',
+              },
+              {
+                label: '25000',
+                type: 'radio',
+                value: '25000',
+              },
+              {
+                label: '50000',
+                type: 'radio',
+                value: '50000',
+              },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: data => {
+                        //console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: 'Submit',
+                    handler: async(data) => {
+                      loading = await this.loadingCtrl.create({});
+                      loading.present();
+                      this.common.initPayment(data).subscribe(data => {
+                        loading.dismiss();
+                        if (data["status"] == "success") {
+                          window.location.href = data['link'];
+                        }else{
+                          //
+                        }
+                    });
+                    }
+                }
+            ]
+        });
+        prompt.present();
+          // this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
         }
 
       });
@@ -215,7 +271,7 @@ export class RectangleComponent {
     loading.present();
     let json = {"userId" : this.auth.userId,"bidamount" : this.price-currentprice,"limit":this.auth.bidlimit, "id": id.toString(),"cst":"new","action":"bid"};
      this.common.bid(json).subscribe(
-      data => {
+      async(data) => {
         loading.dismiss();
         if(data['status']=="success")
         {
@@ -223,7 +279,62 @@ export class RectangleComponent {
           this.price='';
         }
         else{
-          this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+         // this.presentToast('You cannot bid any further. Your security deposit has been consumed.');
+         const prompt = await this.alertCtrl.create({
+          header: 'Your security deposit has been consumed',
+          message: "To create a security deposit we are preparing your payment setup please select a price",
+          inputs: [
+            {
+              label: '5000',
+              type: 'radio',
+              value: '5000',
+            },
+            {
+              label: '10000',
+              type: 'radio',
+              value: '10000',
+            },
+            {
+              label: '15000',
+              type: 'radio',
+              value: '15000',
+            },
+            {
+              label: '25000',
+              type: 'radio',
+              value: '25000',
+            },
+            {
+              label: '50000',
+              type: 'radio',
+              value: '50000',
+            },
+          ],
+          buttons: [
+              {
+                  text: 'Cancel',
+                  handler: data => {
+                      //console.log('Cancel clicked');
+                  }
+              },
+              {
+                  text: 'Submit',
+                  handler: async(data) => {
+                    loading = await this.loadingCtrl.create({});
+                    loading.present();
+                    this.common.initPayment(data).subscribe(data => {
+                      loading.dismiss();
+                      if (data["status"] == "success") {
+                        window.location.href = data['link'];
+                      }else{
+                        //
+                      }
+                  });
+                  }
+              }
+          ]
+      });
+      prompt.present();
         }
 
       });

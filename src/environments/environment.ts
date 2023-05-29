@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  socketUrl: 'wss://staging.khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket',
+  apiUrl: 'https://staging.khaleejauction.com/newdesign/api'
 };
 
 /*

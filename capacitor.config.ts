@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'khaleej-mobile',
+  appId: 'com.unifi.khaleej',
+  appName: 'Live khaleej',
   webDir: 'www',
   server: {
     androidScheme: 'https'

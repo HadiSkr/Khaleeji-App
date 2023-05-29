@@ -6,7 +6,7 @@ rectangle {
       font-size: 11px;
     }
       ion-row {
-          color:#005495;
+          color:#005495 !important;
         }
         img{
           width:100%;
@@ -18,6 +18,11 @@ rectangle {
           max-height: 88px;
           padding: 0 !important;;
         }
+        .item-bid-price {
+          font-size: 1.2rem;
+          font-weight: bold;
+          margin-left: 30%;
+      }
         .second
         {
           color: var(--ion-color-danger);

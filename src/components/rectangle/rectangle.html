@@ -1,21 +1,21 @@
 <!-- Generated template for the BoxComponent component -->
 <ion-grid>
   <ion-row *ngIf="!auction.hideImage">
-    <ion-col (click)="gotoDetails(auction.id)" col-4 class="image-container">
+    <ion-col (click)="gotoDetails(auction.id)" size="4" class="image-container">
       <img [src]="(auction.image)?auction.image:auction.preimage"/>
     </ion-col>
-    <ion-col col-8>
+    <ion-col size="8">
       <ion-row>
-        <ion-col col-8>
+        <ion-col size="8">
           <div (click)="gotoDetails(auction.id)"><b class="item-title">{{auction.title}}</b></div>
-          <div class="item-bid">{{ 'box.bids' | translate }}  {{auction.num_bids}}</div>
-          <div class="item-timer" style="width: 116px;"><ion-icon name="time"></ion-icon><span> {{ auction.ends | convertremaining }}</span></div>
+          <div class="item-bid" style="font-size:11px" >{{ 'box.bids' | translate }}  {{auction.num_bids}}</div>
+          <div class="item-timer" style="width: 116px;font-size:11px"><ion-icon name="time"></ion-icon><span> {{ auction.ends | convertremaining }}</span></div>
           <!--<div>
-            <button style="padding:5px;height:2rem;" ion-button size="small" (click)="bid(auction.id)" [color]="(auction.highestbidder)? 'secondary' : 'danger'">{{auction.current_bid | bidprice }}</button>
+            <button style="padding:5px;height:2rem;" ion-button size="small" (cli ck)="bid(auction.id)" [color]="(auction.highestbidder)? 'secondary' : 'danger'">{{auction.current_bid | bidprice }}</button>
           </div>-->
           <div class="item-bid-price" [style.color]="(auction.highestbidder)? 'green' : 'red'">{{auction.current_bid | currentprice }}</div>
         </ion-col>
-        <ion-col col-4>
+        <ion-col size="4">
           <!--<div class="item-current-bid" [style.color]="(auction.highestbidder)? 'green' : 'red'">{{auction.current_bid | currentprice }}</div>-->
           <br>
           <div class="item-lot">{{ 'box.lot' | translate }} <span class="second">{{auction.id}}</span></div>

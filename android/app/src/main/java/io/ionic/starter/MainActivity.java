@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.unifi.khaleej;
 
 import com.getcapacitor.BridgeActivity;
 

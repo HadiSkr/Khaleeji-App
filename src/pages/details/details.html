@@ -117,11 +117,12 @@
     </ion-card>
 </ion-content>
 <ion-footer>
-    <ion-toolbar>
-        <ion-row class="auto-bid green" *ngIf="auction.autobid_id!==undefined&&auction.autobid_id=== auth.userId" (click)="showAutoBidCancelConfirm()"><b>{{ 'details.autobid' | translate }}</b>
+  <ion-row class="auto-bid green" *ngIf="auction.autobid_id!==undefined&&auction.autobid_id=== auth.userId" (click)="showAutoBidCancelConfirm()"><b>{{ 'details.autobid' | translate }}</b>
             <ion-badge item-end>{{ auction.autobid_amount | bidprice }}</ion-badge>
         </ion-row>
         <ion-row class="auto-bid red" *ngIf="auction.autobid_id!==undefined&&auction.autobid_id!==auth.userId" (click)="showAutoBidPrompt()">{{ 'details.autobid' | translate }}</ion-row>
+    <ion-toolbar>
+
         <ion-row>
             <ion-col size="5" class="footer-items" text-center>
                 <ion-badge *ngIf="auction.highestbidder" color="secondary" style="color: black;">{{ 'details.highest' | translate }}</ion-badge>
