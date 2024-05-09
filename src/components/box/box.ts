@@ -63,7 +63,7 @@ export class BoxComponent {
                 data => {
                   loading.dismiss();
                   if(data['status']=="success")
-                  { //+'\r\nhttps://khaleejauction.com/item.php?id='+auction.id
+                  { //+'\r\nhttps://staging.khaleejauction.com/item.php?id='+auction.id
                   this.socialSharing.shareViaInstagram(data['results'][0]['images'][0], keywords)
                     .then(() => console.log('Shared!'))
                     .catch((error: any) => console.error(error));

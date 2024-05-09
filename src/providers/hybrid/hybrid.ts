@@ -70,7 +70,7 @@ export class HybridProvider {
   getDetails(auctionId) {
     this.auction=[];
     let data = { action: "getauctions", userId: this.auth.userId, lot_no: auctionId };
-    this.http.post('https://khaleejauction.com/newdesign/api/hybridauction.php', data).subscribe(
+    this.http.post('https://staging.khaleejauction.com/newdesign/api/hybridauction.php', data).subscribe(
       data => {
         if (data['status'] == "success") {
           this.auction = data["results"][0];

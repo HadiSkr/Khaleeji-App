@@ -156,7 +156,7 @@ export class DetailsPage {
   }
   getUpdates(): Observable<any> {
     let observable = new Subject();
-    const socket = new WebSocket("wss://khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket")
+    const socket = new WebSocket("wss://staging.khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket")
     socket.addEventListener('message', el => {
       try{
 
@@ -183,7 +183,7 @@ export class DetailsPage {
     var title = title.replace(/\s+/g, '-');
     title = title.replace(".", "-");
     title = title + "-" + year;
-    return `https://khaleejauction.com/cars/` + title + `/` + id + `/`;
+    return `https://staging.khaleejauction.com/cars/` + title + `/` + id + `/`;
   }
   loadMap(details) {
     this.link = this.sanitizer.bypassSecurityTrustResourceUrl('https://maps.google.com/maps?q=' + details.latitude + ', ' + details.longitude + '&z=15&output=embed');
@@ -320,7 +320,7 @@ export class DetailsPage {
       let json;
       let bidlimit;
       json = { "action": "getBidLimit", "userId": this.auth.userId };
-      this.http.post('https://khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
+      this.http.post('https://staging.khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
         data => {
           if (data['status'] == "error") {
 
