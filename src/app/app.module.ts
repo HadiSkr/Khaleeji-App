@@ -35,7 +35,7 @@ import { DirectivesModule } from 'src/directives/directives.module';
 
 
 const config: SocketIoConfig = {
-  url: 'https://staging.khaleejauction.com:2053', options: {
+  url: 'https://khaleejauction.com:2053', options: {
     transports: ['websocket']
   }
 };

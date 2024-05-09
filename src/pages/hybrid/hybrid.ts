@@ -91,7 +91,7 @@ export class HybridPage {
   getUserLimit() {
     let json;
     json = { "action": "getBidLimit", "userId": this.auth.userId };
-    this.http.post('https://staging.khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
+    this.http.post('https://khaleejauction.com/newdesign/api/userpermission.php', json).subscribe(
       data => {
         if (data['status'] == "error") {
         }

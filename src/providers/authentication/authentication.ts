@@ -59,19 +59,19 @@ export class AuthenticationProvider {
   }
   register(data)
   {
-    return this.http.post('https://staging.khaleejauction.com/newdesign/api/register.php', data);
+    return this.http.post('https://khaleejauction.com/newdesign/api/register.php', data);
   }
   login(data)
   {
     data.username=CryptoJS.AES.encrypt(JSON.stringify(data.username), this.secretKey, {format: this.CryptoJSAesJson}).toString();
     data.password=CryptoJS.AES.encrypt(JSON.stringify(data.password), this.secretKey, {format: this.CryptoJSAesJson}).toString();
     data.deviceID=CryptoJS.AES.encrypt(JSON.stringify(this.deviceId), this.secretKey, {format: this.CryptoJSAesJson}).toString();
-    return this.http.post('https://staging.khaleejauction.com/newdesign/api/user_login.php', data);
+    return this.http.post('https://khaleejauction.com/newdesign/api/user_login.php', data);
   }
   setUser(userId){
     this.userId = userId;
     let json = {"action" : "getUserInfo","userId" : userId };
-    this.http.post('https://staging.khaleejauction.com/newdesign/api/users.php', json).subscribe(
+    this.http.post('https://khaleejauction.com/newdesign/api/users.php', json).subscribe(
       data => {
         console.log(data);
         if(data['status']=="error")
@@ -93,7 +93,7 @@ export class AuthenticationProvider {
   setSecretKey()
   {
     let json = {"action" : "getkey"};
-    this.http.post('https://staging.khaleejauction.com/newdesign/api/get_initial.php', json).subscribe(
+    this.http.post('https://khaleejauction.com/newdesign/api/get_initial.php', json).subscribe(
       data => {
         if(data['status']=="success"){
           this.secretKey=data['unifi_key'];
@@ -106,7 +106,7 @@ export class AuthenticationProvider {
   setSettings()
   {
     let json = {"action" : "getsettings"};
-    this.http.post('https://staging.khaleejauction.com/newdesign/api/commonsettings.php', json).subscribe(
+    this.http.post('https://khaleejauction.com/newdesign/api/commonsettings.php', json).subscribe(
       data => {
         if(data['status']=="success"){
           this.waitingtime=data['waitingtime'];

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  socketUrl: 'wss://staging.khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket',
-  apiUrl: 'https://staging.khaleejauction.com/newdesign/api'
+  socketUrl: 'wss://khaleejauction.com:2053/socket.io/?EIO=4&transport=websocket',
+  apiUrl: 'https://khaleejauction.com/newdesign/api'
 };
 
 /*

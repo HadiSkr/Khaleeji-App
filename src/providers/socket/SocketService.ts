@@ -9,7 +9,7 @@ export class SocketService {
   private socket: Socket;
 
   setup(): void {
-    this.socket = io("https://staging.khaleejauction.com:2053", {
+    this.socket = io("https://khaleejauction.com:2053", {
       path: '/',
       reconnection: true
     });

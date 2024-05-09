@@ -17,6 +17,8 @@ import { DOCUMENT } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { SocketService } from 'src/providers/socket/SocketService';
 import { environment } from 'src/environments/environment';
+import { ModalController, NavParams } from '@ionic/angular';
+
 /**
  * Generated class for the CurrentPage page.
  *
@@ -40,7 +42,7 @@ export class CurrentPage {
   instagram: any = false;
   resumeListener: Subscription = new Subscription();
   data: any = { action: "getauctions", language: "EN", page: 1, perpage: 50, userId: this.auth.userId };
-  constructor(@Inject(DOCUMENT) public doc, public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public router: Router, public common: CommonProvider, public platform: Platform) {
+  constructor(@Inject(DOCUMENT) public doc,public modalCtrl: ModalController, public globalEventsService: GlobalEventsService, public loadingCtrl: LoadingController, public popoverCtrl: PopoverController, public auth: AuthenticationProvider, public navCtrl: NavController, public router: Router, public common: CommonProvider, public platform: Platform) {
 
     let navParams = router.getCurrentNavigation()?.extras.state;
 
@@ -290,15 +292,20 @@ export class CurrentPage {
         }
       });
     }
-  async presentEndPopover(myEvent) {
+    async presentEndPopover(myEvent) {
       let popover = await this.popoverCtrl.create({
         component: DropdownComponent,
-        cssClass: 'dropdown-popover'
+        cssClass: 'dropdown-popover',
+        componentProps: {
+          data: this.enddates
+        }
       });
       popover.present(myEvent);
       popover.onDidDismiss().then(order => {
+        console.log("the order is", order);
         if (order != null) {
           this.enddates.map((item) => {
+            console.log(order.data);
             if (item.enddate == order.data.enddate) {
               item.active = true;
             }
@@ -306,7 +313,7 @@ export class CurrentPage {
               item.active = false;
             }
           });
-          this.searchAuctions({ auctionenddate: order.data.duration });
+          this.searchAuctions({ auctionenddate: [order.data.duration] });
         }
       });
     }
