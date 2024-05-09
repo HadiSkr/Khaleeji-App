@@ -19,9 +19,9 @@ log.txt
 
 # Ionic
 /.ionic
-/www
-/platforms
-/plugins
+#/www
+#/platforms
+#/plugins
 
 # Compiled output
 /dist
